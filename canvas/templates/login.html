@@ -1,0 +1,76 @@
+{%extends 'layout.html'%}
+{%block title%} Login {%endblock%}
+{%block body%}
+<div style="display:flex; justify-content: center; padding: 10% 25% 0 25%;flex-direction: column; align-items: center;" >
+    <div id="messagediv" class="canvasMessage">
+        {%if message%}
+        <p>{{message}}</p>
+        {%endif%}
+    </div>
+    <div style="display:inline-flex; margin: 20px 0 20px 0; align-items: center;">
+        <label style="padding: 0 10px 0 10px;">Login</label>
+        <label class="switch" style="display: flex; justify-content: center; text-align: center; align-items: center;">
+            <input type="checkbox" id="toggleSwitch">
+            <span class="slider"></span>
+            
+        </label>  
+        <label style="padding: 0 10px 0 10px;">Register</label>
+    </div>
+    <form name="registerform" method="post" action="{%url 'login'%}" style="display: none;" id="register">
+        {% csrf_token %}
+        <div class="form-group text-center">
+            <h3>Register</h3>
+        </div>
+        <div class="form-group">
+            <label for="registeruser">Username</label>
+            <input type="text" class="form-control" id="registeruser" name="registeruser" placeholder="Enter Username">
+        </div>
+        <div class="form-group">
+            <label for="registerpass">Password</label>
+            <input type="password" class="form-control" id="registerpass" name="registerpass" placeholder="Password">
+        </div>
+        <div class="form-group">
+            <label for="registerconfirmpass">Confirm Password</label>
+            <input type="password" class="form-control" id="registerconfirmpass" name="registerconfirmpass" placeholder="Confirm Password">
+            </div>
+        <div class="form-group py-2 justify-content-center d-flex">
+            <button type="submit" name="action" value="register" class="btn btn-primary">Register</button>
+        </div>
+    </form>
+
+    <form method="post" action="{% url 'login'%}" name="loginform" style="display: block;" id="login">
+        {%csrf_token%}
+        <div class="form-group text-center">
+            <h3>Login</h3>
+        </div>
+        <div class="form-group">
+            <label for="loginuser">Login</label>
+            <input type="text" name="loginuser" id="loginuser" class="form-control">    
+        </div>
+        <div>
+            <label for="loginpass">Password</label>
+            <input type="password" name="loginpass" id="loginpass" class="form-control">  
+        </div>
+        <div class="form-group py-2 justify-content-center d-flex">
+            <button type="submit" name="action" value="login" class="btn btn-primary">Login</button>
+        </div>
+    </form>
+
+</div>
+<script>
+    let login = document.querySelector("#login");
+        let register = document.querySelector("#register");
+        document.querySelector("#toggleSwitch").addEventListener('change', () => {
+            if (document.querySelector("#toggleSwitch").checked) {
+                console.log("clicked");
+                if (register.style.display === "none"){
+                    register.style.display = "block";
+                    login.style.display = "none";
+                }
+            } else {
+                login.style.display = "block";
+                register.style.display = "none";
+            }
+        });
+</script>
+{%endblock%}

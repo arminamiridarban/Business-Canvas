@@ -1,0 +1,31 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block title %} Home {% endblock %}
+{% block body %}
+<div class="mainbody">
+    <div class="mainpage">
+        <div class="mainleftdiv">
+            <span>
+                <h3>Welcome to CanvasGenius,</h3> <br>Your go-to platform for crafting robust business strategies and unleashing your entrepreneurial potential! Whether you're a seasoned entrepreneur or just starting out, our intuitive online business canvas tool empowers you to visualize, iterate, and refine your business ideas with ease.
+                <br>
+                With CanvasGenius, you can create, collaborate, and innovate like never before. Our user-friendly interface and powerful features make it simple to explore different aspects of your business, from value propositions to customer segments, channels, and more. Plus, with integrated ChatGPT capabilities, you can receive real-time insights and suggestions to enhance your canvas and make informed decisions.
+                <br>
+                Join thousands of entrepreneurs worldwide who trust CanvasGenius to bring their business ideas to life. Sign up today and embark on your journey to entrepreneurial success!
+            </span>
+            <div class="mainleftdivinner">
+                <a href="{% url 'canvas'%}" style="width: 100%;">
+                    <button type="button">Create Your Free Model</button>
+                </a>
+                <a href="{% url 'premium'%}" style="width: 100%;">
+                    <button type="button" style="background-color: #FF6666;" href>Go Premium</button>
+                </a>
+            </div>
+        </div>
+        <div class="mainrightdiv">
+            <img src="{% static 'picture/model.png'%}" alt="model">
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

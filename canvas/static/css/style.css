@@ -1,0 +1,683 @@
+.notification {
+    position: fixed;
+    text-align: center;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    color: white;
+    border-radius: 5px;
+    display: none;
+    opacity: 0.8;
+}
+.canvasbutton{
+    width:auto;
+    background-color: #2196F3;
+    color: white;
+    margin: 5px 0;
+    border: none;
+    border-radius: 10px;
+    height: 50px;
+}  
+
+html, body {
+    color: white;
+    height: 100%;
+    margin: 0;
+    background-color: black;
+}
+.canvas div{
+    width: 100%;
+    padding-top: 1%;
+}
+.canvas div div form{
+    margin: 2% 0 2% 0;
+}
+.mainbody {
+    position: relative;
+    height: calc(100vh - 72px);
+    z-index: 0;
+}
+
+.mainbody::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("../picture/bg4.webp");
+    border: none;
+    background-size: cover;
+    background-position: center;
+    filter: blur(2px);
+    z-index: -1;
+}
+
+.mainpage {
+    display: flex;
+    color: white;
+    position: relative;
+    z-index: 1; /* Ensure .mainpage and its content are above the blurred background */
+}
+.mainleftdiv, .mainrightdiv{
+    width: 50% ;
+}
+.mainleftdiv{
+    top: 10%;
+    padding: 10%;
+    display: flex;
+    flex-direction: column;
+    animation: fade 3s;
+}
+.mainleftdiv a button{
+    width: 90%;
+    margin: 10% 0 10% 0;
+    border-radius: 10px;
+    background-color: #22ff00;
+    border: 0;
+    height: 50px;
+    font-weight: bold;
+}
+
+.mainleftdivinner{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.mainrightdiv {
+    display: flex;
+    justify-content: center; /* Horizontally center the content */
+    align-items: center;
+    animation: move 1s;
+}
+
+.mainrightdiv img{
+    width: 90%;
+    max-width: 90%;
+
+}
+.premium {
+    position: relative;
+    height: calc(100vh - 72px);
+    z-index: 0;
+}
+
+.premium::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("../picture/bg6.webp");
+    background-size: cover;
+    background-position: center;
+    filter: blur(3px);
+    z-index: -1;
+}
+.premiuminside {
+    display: flex;
+    flex-direction: column;
+    padding: 5% 20% 0 20%;
+    color: white;
+    position: relative;
+    z-index: 1; /* Ensure .mainpage and its content are above the blurred background */
+}
+
+.tablecenter{
+    text-align: center;
+}
+
+@keyframes fade{
+    0%  {opacity: 0;}
+    100% {opacity: 1;}
+}
+@keyframes move{
+    0% {transform: translateX(100%);}
+    100% {transform: translateX(0%);}
+}
+.infobutton {
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+.info {
+    display: none;
+    width: 80%;
+    color: #fff;
+    border-radius: 5px;
+    z-index: 1;
+}
+
+.projectrequest{
+    margin-top: 20px;
+    padding: 0 20px;
+    text-align: center;
+}
+.projectrequest button{
+    width: fit-content;
+    height: 50px;
+    background-color: #2196F3;
+    font-size: clamp(14px,1vw,20px);
+    margin: 5px 0;
+}
+
+.ourcanvas{
+    background-color: #000000;
+    height: 100%;
+    width: 100%;
+    max-width: 100% !important;
+    content: "";
+    color: white;
+    z-index: 0;
+}
+
+.projectname { grid-area: header; }
+.key-partner { grid-area: key-partner; }
+.header {grid-area: header; }
+.key-activities { grid-area: key-activities; }
+.value-proposition { grid-area: value-proposition; }
+.customer-relationship {grid-area: customer-relationship;}
+.customer-segment {grid-area: customer-segment;}
+.channel {grid-area: channels;}
+.key-resources {grid-area: key-resources;}
+.cost-structure {grid-area: cost-structure;}
+.revenue-stream {grid-area: revenue-stream;}
+
+.grid-container-tutorial {
+    height: 100%;
+    width: 100%;
+    max-width: 100% !important;
+    display: grid;
+    grid-template-columns: 19.5% 19.5% 10.25% 10.25% 19.5% 19.5%;
+    grid-template-rows: auto 1fr 1fr 1fr;
+    grid-template-areas:
+  'key-partner key-activities value-proposition value-proposition customer-relationship customer-segment'
+  'key-partner key-resources value-proposition value-proposition channels customer-segment'
+  'cost-structure cost-structure cost-structure revenue-stream revenue-stream revenue-stream';
+    gap: 5px;
+    background-color: transparent;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.grid-container-tutorial > li {
+    border: dodgerblue dotted;
+    border-radius: 10px;
+    padding: 5%;
+    list-style-type: none;
+}
+
+.description {
+    display: none;
+    opacity: 0;
+    transition: opacity 2s ease; /* Apply transition effect */
+}
+
+.show-description {
+    display: block;
+    opacity: 1;
+}
+
+
+.grid-container {
+    height: 100%;
+    width: 100%;
+    max-width: 100% !important;
+    display: grid;
+    grid-template-columns: 19.5% 19.5% 10.25% 10.25% 19.5% 19.5%;
+    grid-template-rows: 12% 1fr 1fr 1fr; /* Adjusted grid-template-rows */
+    grid-template-areas:
+  'header header header header header header'
+  'key-partner key-activities value-proposition value-proposition customer-relationship customer-segment'
+  'key-partner key-resources value-proposition value-proposition channels customer-segment'
+  'cost-structure cost-structure cost-structure revenue-stream revenue-stream revenue-stream';
+
+    gap: 5px;
+    background-color: rgb(94, 42, 161);
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+
+.grid-container > div > h4, .grid-container > div > h1, .grid-container > div > h6 {
+    text-align: center;
+    font-size: clamp(12px,2vw,26px);
+    font-weight:bold;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.grid-container > div >div> li {
+    list-style: none;
+}
+
+.grid-container > div > div > input::before {
+    content: "\2713"; 
+    display: inline-block;
+    margin-right: 5px; 
+}
+
+.grid-container > div {
+    font-family: 'Times New Roman', Times, serif;
+    border-radius: 0;
+    background-image: linear-gradient(90deg, #a5aeffe0,rgb(226, 226, 226) );
+    padding: 1% 2% 1% 2%; 
+    font-size: clamp(12px,1vw,16px);
+    color: black;
+    width: 100%;
+}
+
+.header {
+    padding: 5% 0% 5% 0%; 
+    justify-content: center;
+    text-align: center;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.canvaseditbuttondiv{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.canvaseditbuttondiv >div{
+    display: inline;
+}
+.canvaseditbuttondiv button {
+    border: none;
+    background-color: transparent;
+    border-radius: 5px;
+    font-size: clamp(10px,1vw,12px);
+}
+
+.canvaseditbuttondiv button[data-mode="edit"]:hover {
+    background-color: white;
+    scale: 1.2;
+    font-weight: bold;
+    border: #b961ff 1px solid;
+    color: blue;
+
+}
+
+.canvaseditbuttondiv button[data-mode="remove"]:hover {
+    background-color: white;
+    border: #b961ff 1px solid;
+    scale: 1.2;
+    font-weight: bold;
+    color: red;
+}
+.buildCanvasInput, .buildCanvasTextarea {
+    resize: none;
+    color: inherit;
+    border: 0;
+    background-color: transparent;
+    outline: none;
+    border-radius: 5px;
+    margin: 5px 0;
+}
+
+
+.buildCanvasAdd {
+    display: flex;
+    justify-content: space-between;
+}
+
+.buildCanvasAdd button{
+    border: none;
+    background-color: transparent;
+    border-radius: 5px;
+    width: auto;
+    height: 30px;
+    margin-top: 5px;
+    font-size: clamp(10px,1vw,14px);
+}
+.buildCanvasAdd button:hover{
+    scale: 1.2;
+    font-weight: bold;
+    color: green;
+    text-decoration: underline;
+}
+
+.switch {
+position: relative;
+display: inline-block;
+width: 60px;
+height: 34px;
+}
+
+.switch input {
+opacity: 0;
+width: 0;
+height: 0;
+}
+
+.slider {
+position: absolute;
+cursor: pointer;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background-color: #ccc;
+transition: .4s;
+border-radius: 34px;
+}
+
+.slider:before {
+position: absolute;
+content: "";
+height: 26px;
+width: 26px;
+left: 4px;
+bottom: 4px;
+background-color: white;
+transition: .4s;
+border-radius: 50%;
+}
+
+input:checked + .slider {
+background-color: #2196F3;
+}
+
+.switch {
+position: relative;
+display: inline-block;
+width: 60px;
+height: 34px;
+}
+
+.switch input {
+opacity: 0;
+width: 0;
+height: 0;
+}
+
+.slider {
+position: absolute;
+cursor: pointer;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background-color: green;
+transition: .4s;
+border-radius: 34px;
+}
+
+.slider:before {
+position: absolute;
+content: "";
+height: 26px;
+width: 26px;
+left: 4px;
+bottom: 4px;
+background-color: white;
+transition: .4s;
+border-radius: 50%;
+}
+
+input:checked + .slider {
+background-color: #2196F3;
+}
+
+input:focus + .slider {
+box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+transform: translateX(26px);
+}
+.canvasMessage {
+    color: red;
+    animation: blink 6s infinite;
+    text-align: center;
+}
+
+@keyframes blink {
+    0%, 40%, 80% {
+        opacity: 1;
+    }
+    20%, 60% ,100%{
+        opacity: 0;
+    }
+}
+
+.valueProposition, .tempInputDiv {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.not{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+
+.collapse {
+    width: auto;
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    height: 40px;
+    transition: font-size 0.5s ease; 
+    font-size: 12pt;
+    display: block;
+}
+
+.collapse:hover {
+    font-size: 14pt;
+}
+
+.add {
+    width: auto;
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    height: 40px;
+    transition: font-size 0.5s ease; 
+    font-size: 12pt;
+    position: relative;
+}
+
+.add:hover {
+    font-size: 14pt;
+}
+
+
+.layoutheader{
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+.layoutheader ul{
+    display: flex;
+    list-style: none;
+    color: white;
+    text-decoration: none;
+}
+.layoutheader ul li{
+    margin: 0 10px;
+}
+.layoutheader a{ 
+    color: white;
+    text-decoration: none;
+}
+.layoutheader a:hover{ 
+    font-weight: bold;
+}
+
+.burger {
+    display: none;
+    cursor: pointer;
+    padding: 16px 26px;
+    color: white;
+}
+
+.bar1, .bar2, .bar3 {
+    width: 35px;
+    height: 5px;
+    background-color: white;
+    margin: 6px 0;
+    transition: 0.4s;
+}
+
+.change .bar1 {
+    transform: translate(0, 11px) rotate(-45deg);
+}
+
+.change .bar2 {opacity: 0;}
+
+.change .bar3 {
+    transform: translate(0, -11px) rotate(45deg);
+}
+
+.burgerlist {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    color: white;
+    text-decoration: none;
+    height: 0; /* Start with height 0 */
+    overflow: hidden; /* Hide overflowing content */
+    transition: height 0.5s; /* Smooth transition for height */
+}
+
+.burgerlist li {
+    margin: 0;
+    padding: 5px 0;
+}
+
+.burgerlist a {
+    color: inherit;
+}
+
+.burgerlistopen {
+    height: 140px; /* Adjust the height to show all menu items */
+}
+
+.tutorial{
+    display: flex;
+    padding: 0 5%;
+    flex-direction: column;
+    background-color:rgb(94, 42, 161); ;
+}
+.tutorial-header{
+    text-align: center;
+    margin-top: 50px;
+}
+
+.tutorial-material{
+    padding: 50px 0;
+}
+
+.p404{
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    content: "";
+    z-index: 0;
+    display: flex;
+    height: 90%;
+}
+
+.p404 div{
+    color: white;
+}
+.p404 div h1 {
+    font-size: clamp(200px, 1vw, 400px);
+    text-shadow: -10px -10px 50px #8400ff, 10px 10px 50px #f00000;
+    animation: blink 2s infinite;
+}
+
+.p404 div h2 {
+    font-size: clamp(100px, 1vw, 200px);
+    text-shadow: -10px -10px 50px #8400ff, 10px 10px 50px #f00000;
+    animation: blink 3s infinite;
+}
+
+@keyframes blink {
+    0% {
+        text-shadow: -10px -10px 50px #8400ff, 10px 10px 50px #f00000;
+    }
+    50% {
+        text-shadow: -10px -10px 50px #f00000, 10px 10px 50px #8400ff;
+    }
+    100% {
+        text-shadow: -10px -10px 50px #8400ff, 10px 10px 50px #f00000;
+    }
+}
+
+
+@media only screen and (max-width: 750px) {
+    .valueProposition, .tempInputDiv {
+        display: grid;
+        grid-gap: 5px;
+        grid-template-columns: repeat(1, 1fr);
+        margin: 5px 0 5px 0;
+    }
+    .burger{
+        display: inline-block;
+        flex-direction: column;
+    }
+    .layoutheader{
+        display: none;
+    }
+    
+    
+}
+@media only screen and (max-width: 1300px) {
+    .mainpage{
+        display: grid;
+        grid-template-columns: repeat(1,1fr);
+        width: 100%;
+    }
+    .mainleftdiv{
+        display: grid;
+        grid-template-columns: repeat(1,1fr);
+        width: 100%;
+    }
+    .mainrightdiv {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+    
+    .mainrightdiv img {
+        max-width: 100%; 
+        max-height: 100%; 
+    }
+    .grid-container , .grid-container-tutorial{
+        height: fit-content;
+        width: 100%;
+        max-width: 100% !important;
+        background-color: #b961ff;
+        display: grid;
+        grid-template-columns: repeat(1,1fr);
+        grid-template-rows: repeat(1,1fr);
+        grid-template-areas:
+      'header'
+      'value-proposition'  
+      'customer-segment'
+      'channels'
+      'revenue-stream'
+      'key-partner'
+      'key-resources'
+      'key-activities'
+      'customer-relationship'
+      'cost-structure';  
+    
+        gap: 5px;
+        background-color: rgb(94, 42, 161);
+        padding: 10px;
+        box-sizing: border-box;
+    }   
+}

@@ -1,0 +1,268 @@
+{% extends 'layout.html' %}
+
+{% block title %}Your Model{% endblock %}
+
+{% block body %}
+<!--Fix the check mark for values -->
+<div class="projectrequest">
+    <form method="post" action="{% url 'buildcanvas' %}" name="canvassearch">
+        {% csrf_token %}
+        {% if projects %}
+            <label for="projects">Select project for preview</label>
+            <select name="project"> 
+                <option value="" disabled selected>---</option>
+                {% for proj in projects %}
+                    <option value="{{ proj.id }}">{{ proj.name }}</option> 
+                {% endfor %}
+            </select>
+            <button type="submit" class="btn btn-primary">Create Model</button> 
+        {% endif %}
+    </form>
+</div>
+{% if project %}
+<div id="notification" class="notification"></div>
+<div class="grid-container" style="z-index: 999;">
+    <div class="header">
+        <h2 >Project: {{ project.name }}</h2>
+        <p>User: {{user.username}} </p>
+        <input type="hidden" value="{{project.name}}" id="projectname" data-id="{{project.id}}">
+    </div>
+    <div class="key-partner">
+        <div class="buildCanvasAdd">
+            <h4>Key Partnership</h4>
+            <button type="button" value="key-partnership" id="key-partnership-add-button" class="buildCanvasAddButton">Add</button>
+        </div>
+        
+        {% if key_partnerships %}
+        {% for kp in key_partnerships%}
+        <div data-id="{{ kp.2 }}" class="expandable">
+            <div class="canvaseditbuttondiv">
+                <div>
+                    <span>&#10003;</span>
+                    <input type="text" readonly class="buildCanvasInput" data-type="value" value="{{ kp.0 }}" style="font-weight: bold;">
+                </div>
+                <div>
+                    <button type="button" value="{{kp.2}}" data-type="key-partnership" data-mode="edit" class="BuildCanvasEditID">Edit</button>
+                    <button type="button" value="{{kp.2}}" data-type="key-partnership" data-mode="remove" class="BuildCanvasRemoveID">Remove</button>
+                </div>
+            </div>
+            <div style="display: flex; flex-direction: column;">
+                <textarea class="buildCanvasTextarea" data-type="description" readonly >{{ kp.1 }}</textarea>
+            </div>
+        </div>
+        {% endfor%}
+        {%endif%}
+    </div>
+    <div class="key-activities">
+        <div class="buildCanvasAdd">
+            <h4>Key Activities</h4>
+            <button type="button" value="key-activities" id="key-activities-add-button" class="buildCanvasAddButton">Add</button>
+        </div>
+        {% if key_activities %}
+            {% for ka in key_activities%}
+            <div data-id="{{ ka.2 }}">
+                <div class="canvaseditbuttondiv">
+                    <div class="expandable">
+                        <span>&#10003;</span>
+                        <input type="text" readonly class="buildCanvasInput" data-type="value" value="{{ ka.0 }}" style="font-weight: bold;">
+                    </div>
+                    <div>
+                        <button type="button" value="{{ka.2}}" data-type="key-activities" data-mode="edit" class="BuildCanvasEditID">Edit</button>
+                        <button type="button" value="{{ka.2}}" data-type="key-activities" data-mode="remove" class="BuildCanvasRemoveID">Remove</button>
+                    </div>
+                </div>
+                <div style="display: flex; flex-direction: column;">
+                    <textarea class="buildCanvasTextarea" data-type="description" readonly >{{ ka.1 }}</textarea>
+                </div>
+            </div>
+            {% endfor%}
+        {%endif%}
+    </div>
+    <div class="value-proposition" id="value-proposition-main-div">
+        <div class="buildCanvasAdd">
+            <h4>Value Propositions</h4>
+            <button type="button" value="value-proposition" id="value-proposition-add-button" class="buildCanvasAddButton">Add</button>
+        </div>
+        {% if value_propositions %}
+                {% for val in value_propositions %}
+                <div data-id="{{ val.2 }}"> 
+                    <div class="canvaseditbuttondiv ">
+                        <div class="expandable">
+                            <span>&#10003;</span>
+                            <input type="text" readonly class="buildCanvasInput" data-type="value" data-model="value-proposition" data-id="{{val.2}}" style="font-weight: bold;" value="{{ val.0 }}">
+                        </div>
+                        <div>
+                            <button type="button" value="{{val.2}}" data-type="value-proposition" data-mode="edit" class="BuildCanvasEditID">Edit</button>
+                            <button type="button" value="{{val.2}}" data-type="value-proposition" data-mode="remove" class="BuildCanvasRemoveID">Remove</button>
+                        </div>
+                    </div>
+                    <div style="display: flex; flex-direction: column;">
+                        <textarea class="buildCanvasTextarea" data-type="description" readonly>{{ val.1 }}</textarea>
+                    </div>
+                </div>
+                {% endfor %}
+        {% endif %}
+    </div>
+    
+    <div class="customer-relationships">
+        <div class="buildCanvasAdd">
+            <h4>Customer Relationships</h4>
+            <button type="button" value="customer-relationship" id="customer-relationship-add-button" class="buildCanvasAddButton">Add</button>
+        </div>
+        <div>
+            {% if customer_relationships %}
+                {% for cr in customer_relationships%}
+                <div data-id="{{ cr.2 }}" class="expandable"> 
+                    <div class="canvaseditbuttondiv">
+                        <div>
+                            <span>&#10003;</span>
+                            <input type="text" readonly class="buildCanvasInput" data-type="value" value="{{ cr.0 }}" style="font-weight: bold;">    
+                        </div>
+                        <div>
+                            <button type="button" value="{{cr.2}}" data-type="customer-relationship" data-mode="edit" class="BuildCanvasEditID">Edit</button>
+                            <button type="button" value="{{cr.2}}" data-type="customer-relationship" data-mode="remove" class="BuildCanvasRemoveID">Remove</button>
+                        </div>
+                    </div>
+                    <div style="display: flex; flex-direction: column;">
+                        <textarea class="buildCanvasTextarea" data-type="description" readonly >{{ cr.1 }}</textarea>
+                    </div>
+                </div>
+                {% endfor%}
+            {%endif%}
+        </div>
+    </div>
+    <div class="customer-segment">
+        <div class="buildCanvasAdd">
+            <h4>Customer Segments</h4>
+            <button type="button" value="customer-segment" id="customer-segment-add-button" class="buildCanvasAddButton">Add</button>
+        </div>
+        <div>
+            {% if customer_segments %}
+                {% for cs in customer_segments%}
+                <div data-id="{{ cs.1 }}" class="expandable"> 
+                    <div class="canvaseditbuttondiv">
+                        <div>
+                            <span>&#10003;</span>
+                            <input type="text" readonly class="buildCanvasInput" data-type="value" value="{{ cs.0 }}" style="font-weight: bold;">    
+                        </div>
+                        <div>
+                            <button type="button" value="{{cs.1}}" data-type="customer-segment" data-mode="edit" class="BuildCanvasEditID">Edit</button>
+                            <button type="button" value="{{cs.1}}" data-type="customer-segment" data-mode="remove" class="BuildCanvasRemoveID">Remove</button>
+                        </div>
+                    </div>
+                </div>
+                {% endfor%}
+            {%endif%}
+        </div>
+    </div>
+    <div class="key-resources">
+        <div class="buildCanvasAdd">
+            <h4>Key Resources</h4>
+            <button type="button" value="key-resources" id="key-resources-add-button" class="buildCanvasAddButton">Add</button>
+        </div>
+        <div>
+            {% if key_resources %}
+                {% for key in key_resources%}
+                <div data-id="{{ key.2 }}" class="expandable"> 
+                    <div class="canvaseditbuttondiv">
+                        <div>
+                            <span>&#10003;</span>
+                            <input type="text" readonly class="buildCanvasInput" data-type="value" value="{{ key.0 }}" style="font-weight: bold;">
+                        </div>
+                        <div>
+                            <button type="button" value="{{key.2}}" data-type="key-resources" data-mode="edit" class="BuildCanvasEditID">Edit</button>
+                            <button type="button" value="{{key.2}}" data-type="key-resources" data-mode="remove" class="BuildCanvasRemoveID">Remove</button>
+                        </div>
+                    </div>
+                    <div style="display: flex; flex-direction: column;">
+                        <textarea class="buildCanvasTextarea" data-type="description" readonly >{{ key.1 }}</textarea>
+                    </div>
+                </div>
+                {% endfor%}
+            {%endif%}
+        </div>
+    </div>
+    <div class="channel">
+        <div class="buildCanvasAdd">
+            <h4>Channels</h4>
+            <button type="button" value="channels" id="channels-add-button" class="buildCanvasAddButton">Add</button>
+        </div>
+        <div>
+            {% if channels %}
+                {% for ch in channels%}
+                <div data-id="{{ ch.1 }}" class="expandable"> 
+                    <div class="canvaseditbuttondiv">
+                        <div>
+                            <span>&#10003;</span>
+                            <input type="text" readonly class="buildCanvasInput" data-type="value" value="{{ ch.0 }}" style="font-weight: bold;">
+                        </div>
+                        <div>
+                            <button type="button" value="{{ch.1}}" data-type="channel" data-mode="edit" class="BuildCanvasEditID">Edit</button>
+                            <button type="button" value="{{ch.1}}" data-type="channel" data-mode="remove" class="BuildCanvasRemoveID">Remove</button>
+                        </div>
+                        
+                    </div>
+                </div>
+                {% endfor%}
+            {%endif%}
+        </div>
+    </div>
+    <div class="cost-structure">
+        <div class="buildCanvasAdd">
+            <h4>Cost Structure</h4>
+            <button type="button" value="cost-structure" id="cost-structure-add-button" class="buildCanvasAddButton">Add</button>
+        </div>
+        <div>
+            {% if cost_structure %}
+                {% for cs in cost_structure%}
+                <div data-id="{{ cs.2 }}" class="expandable"> 
+                    <div class="canvaseditbuttondiv">
+                        <div>
+                            <span>&#10003;</span>
+                            <input type="text" readonly class="buildCanvasInput" data-type="value" value="{{ cs.0 }}" style="font-weight: bold;">
+                        </div>
+                        <div>
+                            <button type="button" value="{{cs.2}}" data-type="cost-structure" data-mode="edit" class="BuildCanvasEditID">Edit</button>
+                            <button type="button" value="{{cs.2}}" data-type="cost-structure" data-mode="remove" class="BuildCanvasRemoveID">Remove</button>
+                        </div>
+                    </div>
+                    <div style="display: flex; flex-direction: column;">
+                        <textarea class="buildCanvasTextarea" data-type="description" readonly >{{ cs.1 }}</textarea>
+                    </div>
+                </div>
+                {% endfor%}
+            {%endif%}
+        </div>
+    </div>
+    <div class="revenue-stream">
+        <div class="buildCanvasAdd">
+            <h4>Revenue Stream</h4>
+            <button type="button" value="revenue-stream" id="revenue-stream-add-button" class="buildCanvasAddButton">Add</button>
+        </div>
+        <div>
+            {% if revenue_streams %}
+                {% for re in revenue_streams%}
+                <div data-id="{{ re.1 }}" class="expandable"> 
+                    <div class="canvaseditbuttondiv">
+                        <div>
+                            <span>&#10003;</span>
+                            <input type="text" readonly class="buildCanvasInput" data-type="value" value="{{ re.0 }}" style="font-weight: bold;">
+                        </div>
+                        <div>
+                            <button type="button" value="{{re.1}}" data-type="revenue-stream" data-mode="edit" class="BuildCanvasEditID">Edit</button>
+                            <button type="button" value="{{re.1}}" data-type="revenue-stream" data-mode="remove" class="BuildCanvasRemoveID">Remove</button>
+                        </div>
+                    </div>
+                </div>
+                {% endfor%}
+            {%endif%}
+        </div>
+    </div>
+</div>
+<form style="display: none;">{%csrf_token%}</form>
+
+{% endif %}
+
+
+
+{% endblock %}
