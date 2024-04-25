@@ -25,13 +25,12 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         document.querySelectorAll(".buildCanvasAddButton").forEach(button =>{
             button.addEventListener('click', (event) =>{
+                console.log("clicked");
                 addInCanvas(event);
             })
         });
         document.querySelectorAll(".expandable").forEach(item => {
-            // Attach event listener to each expandable div
             item.addEventListener('click', (event) => {
-                // Check if the clicked element is the span or input within the expandable div
                 if (event.target.tagName === 'SPAN' || event.target.tagName === 'INPUT') {
                     expandDiscription(event);
                 }
@@ -680,16 +679,14 @@ function addInCanvas(event){
     console.log("Inside addInCanvas function");
     let functionsWithDescription = ["value-proposition","key-resources","customer-relationship","key-activities","key-partnership","cost-structure"]
     let func = event.target.value;
-    console.log(`this is func ${func}`);
+    console.log(`the func  is ${func}`);
     let funcDiv = event.target;
     funcDiv.style.display = 'none';
     let funcOuterDiv =event.target.closest("div");
-
     let tempDiv = document.createElement('div');
-    tempDiv.classList.add('d-flex', 'flex-column');
+    tempDiv.classList.add('buildCanvasAddContent');
 
     let tempInputLabel = document.createElement('label');
-
 
     let tempInput = document.createElement("input");
     tempInput.dataset.func = func ;
@@ -700,7 +697,6 @@ function addInCanvas(event){
 
     let projectID = document.querySelector('#projectname').dataset['id'];
     let csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
-    let AJAXdata = new Object();
     fetch('/fetchforcanvas', {
         method: "POST",
         headers: {
@@ -714,9 +710,45 @@ function addInCanvas(event){
     })
     .then(response => response.json())
     .then(data => {
-        console.log(data);
-        AJAXdata = {data};
-    })
+        const keys = Object.keys(data);
+        if (keys.length > 0 ){
+            let tempSelect = document.createElement('select');
+            tempSelect.setAttribute('data-value', 'select');            
+            tempSelect['multiple'] = true;
+    
+            keys.forEach(key =>{
+                const values = data[key];
+                let tempoptgroup = document.createElement('optgroup');
+                tempoptgroup.label = key;
+                values.forEach(value => {
+                    let tempOption = document.createElement('option');
+                    tempOption['value'] = value;
+                    tempOption.textContent = value;
+                    tempoptgroup.appendChild(tempOption);
+                });
+                tempSelect.appendChild(tempoptgroup);
+            });
+
+            if (functionsWithDescription.includes(func)){
+                let temptextarea = document.createElement("textarea");
+                temptextarea.dataset.value = "description";
+                let tempTextareaLabel = document.createElement('label');
+                
+                tempTextareaLabel.textContent = 'Description:';
+                tempDiv.append(tempTextareaLabel,temptextarea);
+            }
+            tempDiv.append(tempSelect);
+            let tempAddButton = document.createElement('button');
+            tempAddButton['type'] = 'button';
+            tempAddButton['value'] = func;
+            tempAddButton.classList.add('canvasbutton','text-dark');
+            tempAddButton.textContent = "Add Item";
+            tempAddButton.addEventListener('click', (event)=>{
+                submitAddIncanvas(event);
+            });
+            tempDiv.append(tempAddButton);
+        }
+    })    
     .catch(error => {
         console.log(error);
     });    
@@ -758,8 +790,7 @@ function addInCanvas(event){
             closeButton.dataset.addButton = 'revenue-stream-add-button';
             break;
     }
-    console.log("AJAX");
-    console.log(AJAXdata);
+
     closeButton.onclick = function() {
         let y = closeButton.closest('div');
         let x = closeButton.dataset.addButton;
@@ -768,54 +799,43 @@ function addInCanvas(event){
         
     };
 
-    let tempAddButton = document.createElement('button');
-    tempAddButton['type'] = 'button';
-    tempAddButton['value'] = func;
-    tempAddButton.classList.add('canvasbutton','text-dark');
-    tempAddButton.textContent = "Add Item";
-    tempAddButton.addEventListener('click', (event)=>{
-        submitAddIncanvas(event);
-    })
-
-    tempDiv.append(closeButton,tempInputLabel,tempInput,tempAddButton);
-
-    if (functionsWithDescription.includes(func)){
+    tempDiv.append(closeButton,tempInputLabel,tempInput);
+    if (func === "value-proposition"){
         let temptextarea = document.createElement("textarea");
         temptextarea.dataset.value = "description";
         let tempTextareaLabel = document.createElement('label');
         
         tempTextareaLabel.textContent = 'Description:';
         tempDiv.append(tempTextareaLabel,temptextarea);
+
+        let tempAddButton = document.createElement('button');
+        tempAddButton['type'] = 'button';
+        tempAddButton['value'] = func;
+        tempAddButton.classList.add('canvasbutton','text-dark');
+        tempAddButton.textContent = "Add Item";
+        tempAddButton.addEventListener('click', (event)=>{
+            submitAddIncanvas(event);
+        });
+        tempDiv.append(tempAddButton);
     }
-    let tempSelect = document.createElement("select");
-    console.log(AJAXdata);
-    tempSelect['multiple'] = true;
-    for (let i = 0 ; i<AJAXdata.length ; i++){
-        let tempoption = document.createElement('option');
-        tempoption['value'] = AJAXdata[i];
-        tempoption.textContent = AJAXdata[i];
-        tempSelect.append(tempoption);
-    }
-    tempSelect.append(tempDiv);
-    tempDiv.appendChild(tempAddButton);
-    funcOuterDiv.append(tempDiv);
+    funcOuterDiv.insertAdjacentElement('afterend', tempDiv);
 }
 
 function submitAddIncanvas(event){
-    console.log("Submit Clicked");
     action = event.target;
-    console.log("action is:")
-    console.log(action);
     let div = action.closest('div');
     console.log(div);
     let projectname = document.querySelector("#projectname").value;
     let data = {}
     data.model = action.value;
     data.projectname = projectname;
-    div.querySelectorAll('input, textarea').forEach(element =>{
+    div.querySelectorAll('input, textarea , select').forEach(element =>{
+        console.log("element");
+        console.log(element);
         let type = element.dataset.value;
         switch (type) {
             case "value":
+                console.log("value")
                 let value = element.value;
                 console.log(value);
                 data.value = value;
@@ -825,14 +845,23 @@ function submitAddIncanvas(event){
                 console.log(description);
                 data.description = description;
                 break;
-            case "option":
-                console.log("option");
-                data.select = finalselect;
+            case "select":
+                console.log("select");
+                element.querySelectorAll('optgroup').forEach(optgroup => {
+                    console.log("select2");
+                    let groupName = optgroup.label;
+                    let selectedOptions = [];
+                    optgroup.querySelectorAll('option:checked').forEach(option => {
+                        selectedOptions.push(option.value);
+                    });
+                    data[groupName] = selectedOptions;
+                });
                 break;
+                
         }
-
     });
     console.log("The data gathered is : ");
+    console.log(data);
     let csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
     fetch('/addincanvas',{
         method: "POST",
@@ -850,6 +879,8 @@ function submitAddIncanvas(event){
         }
     })
     .then(data =>{
+        console.log("the div is this div");
+        console.log(div);
         div.remove()
         addNewItemDivInCanvas(data);
         showNotification(`${data.section} added successfully`);
@@ -860,10 +891,14 @@ function submitAddIncanvas(event){
 }
 
 function addNewItemDivInCanvas (divdata){
+    console.log("here to add new item");
+    console.log(divdata);
     let maindiv = document.querySelector(`#${divdata.section}-main-div`);
     let data = divdata.data;
     console.log(data);
     let instance = maindiv.querySelector('[data-id]').cloneNode(true);
+    console.log("the maindiv is");
+    console.log(maindiv);
     
     instance.setAttribute('data-id', `${data.id}`);
     instance.querySelector('[data-type=value]').setAttribute('value',`${data.value}`);
@@ -872,9 +907,15 @@ function addNewItemDivInCanvas (divdata){
     instance.querySelector('[data-mode="edit"]').onclick = editInCanvas;
     instance.querySelector('[data-mode="remove"]').setAttribute('value',`${data.id}`);
     instance.querySelector('[data-mode="remove"]').onclick = removeInCanvas;
-    instance.querySelector('[data-type="description"]').textContent = data.description;
+    if (instance.querySelector('[data-type="description"]')){
+        instance.querySelector('[data-type="description"]').textContent = data.description;
+    }
 
     maindiv.append(instance);
+
+    console.log(`data.section is ${divdata.section}`);
+    let addbutton = document.querySelector(`#${divdata.section}-add-button`);
+    addbutton.style.display = "block";
 }
 
 function showNotification(text) {

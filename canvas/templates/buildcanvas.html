@@ -53,7 +53,7 @@
         {% endfor%}
         {%endif%}
     </div>
-    <div class="key-activities">
+    <div class="key-activities" id="key-activities-main-div">
         <div class="buildCanvasAdd">
             <h4>Key Activities</h4>
             <button type="button" value="key-activities" id="key-activities-add-button" class="buildCanvasAddButton">Add</button>
@@ -104,7 +104,7 @@
         {% endif %}
     </div>
     
-    <div class="customer-relationships">
+    <div class="customer-relationships" id="customer-relationship-main-div">
         <div class="buildCanvasAdd">
             <h4>Customer Relationships</h4>
             <button type="button" value="customer-relationship" id="customer-relationship-add-button" class="buildCanvasAddButton">Add</button>
@@ -131,7 +131,7 @@
             {%endif%}
         </div>
     </div>
-    <div class="customer-segment">
+    <div class="customer-segment" id="customer-segment-main-div">
         <div class="buildCanvasAdd">
             <h4>Customer Segments</h4>
             <button type="button" value="customer-segment" id="customer-segment-add-button" class="buildCanvasAddButton">Add</button>
@@ -139,7 +139,7 @@
         <div>
             {% if customer_segments %}
                 {% for cs in customer_segments%}
-                <div data-id="{{ cs.1 }}" class="expandable"> 
+                <div data-id="{{ cs.1 }}"> 
                     <div class="canvaseditbuttondiv">
                         <div>
                             <span>&#10003;</span>
@@ -155,7 +155,7 @@
             {%endif%}
         </div>
     </div>
-    <div class="key-resources">
+    <div class="key-resources" id="key-resources-main-div">
         <div class="buildCanvasAdd">
             <h4>Key Resources</h4>
             <button type="button" value="key-resources" id="key-resources-add-button" class="buildCanvasAddButton">Add</button>
@@ -182,15 +182,15 @@
             {%endif%}
         </div>
     </div>
-    <div class="channel">
+    <div class="channel" id="channel-main-div">
         <div class="buildCanvasAdd">
             <h4>Channels</h4>
-            <button type="button" value="channels" id="channels-add-button" class="buildCanvasAddButton">Add</button>
+            <button type="button" value="channel" id="channels-add-button" class="buildCanvasAddButton">Add</button>
         </div>
         <div>
             {% if channels %}
                 {% for ch in channels%}
-                <div data-id="{{ ch.1 }}" class="expandable"> 
+                <div data-id="{{ ch.1 }}"> 
                     <div class="canvaseditbuttondiv">
                         <div>
                             <span>&#10003;</span>
@@ -207,7 +207,7 @@
             {%endif%}
         </div>
     </div>
-    <div class="cost-structure">
+    <div class="cost-structure" id="cost-structure-main-div">
         <div class="buildCanvasAdd">
             <h4>Cost Structure</h4>
             <button type="button" value="cost-structure" id="cost-structure-add-button" class="buildCanvasAddButton">Add</button>
@@ -234,7 +234,7 @@
             {%endif%}
         </div>
     </div>
-    <div class="revenue-stream">
+    <div class="revenue-stream" id="revenue-stream-main-div">
         <div class="buildCanvasAdd">
             <h4>Revenue Stream</h4>
             <button type="button" value="revenue-stream" id="revenue-stream-add-button" class="buildCanvasAddButton">Add</button>
@@ -242,7 +242,7 @@
         <div>
             {% if revenue_streams %}
                 {% for re in revenue_streams%}
-                <div data-id="{{ re.1 }}" class="expandable"> 
+                <div data-id="{{ re.1 }}"> 
                     <div class="canvaseditbuttondiv">
                         <div>
                             <span>&#10003;</span>

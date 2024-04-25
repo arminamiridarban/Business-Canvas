@@ -11,14 +11,25 @@
     opacity: 0.8;
 }
 .canvasbutton{
-    width:auto;
+    width:100%;
+    justify-content: center;
     background-color: #2196F3;
-    color: white;
+    color: black;
     margin: 5px 0;
     border: none;
     border-radius: 10px;
     height: 50px;
 }  
+
+.buildCanvasAddContent{
+    display: grid;
+    align-items: center;
+    justify-items: normal; 
+    width: 100%;
+    grid-template-columns: repeat(1, 1fr);
+    margin: 0;
+    padding: 0;
+}
 
 html, body {
     color: white;
@@ -229,7 +240,7 @@ html, body {
     max-width: 100% !important;
     display: grid;
     grid-template-columns: 19.5% 19.5% 10.25% 10.25% 19.5% 19.5%;
-    grid-template-rows: 12% 1fr 1fr 1fr; /* Adjusted grid-template-rows */
+    grid-template-rows: 14% 1fr 1fr 1fr; /* Adjusted grid-template-rows */
     grid-template-areas:
   'header header header header header header'
   'key-partner key-activities value-proposition value-proposition customer-relationship customer-segment'
@@ -241,7 +252,6 @@ html, body {
     padding: 10px;
     box-sizing: border-box;
 }
-
 
 .grid-container > div > h4, .grid-container > div > h1, .grid-container > div > h6 {
     text-align: center;
@@ -271,7 +281,7 @@ html, body {
 }
 
 .header {
-    padding: 5% 0% 5% 0%; 
+    padding: 5% 0% 5% 0%;
     justify-content: center;
     text-align: center;
     font-family: 'Times New Roman', Times, serif;
@@ -656,7 +666,7 @@ transform: translateX(26px);
         max-height: 100%; 
     }
     .grid-container , .grid-container-tutorial{
-        height: fit-content;
+        height: auto;
         width: 100%;
         max-width: 100% !important;
         background-color: #b961ff;

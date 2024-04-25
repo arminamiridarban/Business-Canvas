@@ -54,7 +54,7 @@ class CustomerRelationship(models.Model):
     project=models.ForeignKey(Project,on_delete=models.CASCADE, related_name="customer_relationship")
     customer_segment = models.ManyToManyField(CustomerSegment, related_name="customer_relationship")
     relationship=models.CharField(max_length=511)
-    description=models.TextField(max_length=1023)
+    description=models.TextField(max_length=1023,blank=True)
 
     def __str__(self):
         return f"{self.relationship} , {self.description}"
@@ -75,7 +75,7 @@ class KeyResources(models.Model):
     customer_relationship = models.ManyToManyField(CustomerRelationship, related_name="key_resources")
     channel = models.ManyToManyField(Channel, related_name="key_resources")
     key_resource = models.CharField(max_length=255)
-    description = models.TextField(max_length=1023)
+    description = models.TextField(max_length=1023,blank=True)
 
     def __str__(self):
         return f"{self.key_resource}, {self.description}"
@@ -87,7 +87,7 @@ class KeyActivities(models.Model):
     customer_relationship = models.ManyToManyField(CustomerRelationship, related_name="key_activity")
     channel = models.ManyToManyField(Channel, related_name="key_activity")
     key_activity = models.CharField(max_length=255)
-    description = models.TextField(max_length=1023)
+    description = models.TextField(max_length=1023,blank=True)
 
     def __str__(self):
         return f"{self.key_activity}, {self.description}"
@@ -99,7 +99,7 @@ class KeyPartnership(models.Model):
     customer_relationship = models.ManyToManyField(CustomerRelationship, related_name="key_partner")
     channel = models.ManyToManyField(Channel, related_name="key_partner")
     key_partner = models.CharField(max_length=255)
-    description = models.TextField(max_length=1023)
+    description = models.TextField(max_length=1023,blank=True)
 
     def __str__(self):
         return f"{self.key_partner} ,{self.description}"

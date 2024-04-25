@@ -643,7 +643,6 @@ def editcanvas(request):
         else:
             new_description = None
         
-        # Call the appropriate handler function based on model_to_submit
         if model_to_submit in handler_functions:
             try:
                 item = handler_functions[model_to_submit](pk=pk)
@@ -693,81 +692,83 @@ def removeincanvas(request):
 def addincanvas(request):
     user = request.user
     webdata = json.loads(request.body)
-    model_to_submit = webdata['model']
+    print(webdata['model'])
+    model_to_submit = addincanvasfunctions[webdata['model']]
     value = webdata['value']
+    description =""
     projectname = webdata['projectname']
-
+    handler = handler_field_name[webdata['model']]
     if value == "":
         return JsonResponse({"message": "The 'value' field cannot be empty"}, status=400)
-    if 'description' in webdata:
-        description = webdata['description']
-        print(f"description is {description}")
-    if 'select' in webdata:
-        select = webdata['select']
-        if select == "":
-            return JsonResponse({"message":"The 'value' field cannot be empty"}, status=400)
-        print(f"select is {select}")
 
     try:
         project = Project.objects.get(user=user, name=projectname)
-        print("Project Found")
     except ObjectDoesNotExist:
-        print("Project doesn't exists")
         return JsonResponse({"message":"Project Doesn't Exists"}, status=500)
     except Exception as e:
         return JsonResponse({"message": e}, status=400)
     
-    if model_to_submit == "value-proposition":
-        print("value-description")
-        try:
-            create_value, created = ValueProposition.objects.update_or_create(
-                project=project,
-                value=value,
-                description=description
-            )
-            if created:
-                print("New Value Proposition Created")
-            else:
-                print("Value Proposition Found and Updated")
-            data = {'value':create_value.value,'description': create_value.description,'id': create_value.id,'message': f"{model_to_submit} is added successfully"}
-            # Return a success response with a 200 status code
-            return JsonResponse({"data": data, "section": "value-proposition"}, status=200)
+    try:
+        instance, created = model_to_submit.update_or_create(
+            project=project,
+            **{handler: value}
+        )
+        if created:
+            print("New Value Proposition Created")
+        else:
+            print("Value Proposition Found and Updated")
+        if 'description' in webdata:
+            description = webdata['description']
+            instance.description = webdata['description']
+            instance.save()
         
-        except IntegrityError:
-            return JsonResponse({"message": "Error: Value Proposition already exists for this project"}, status=400)
+        if 'value-proposition' in webdata and len(webdata['value-proposition'])>0:
+            model_to_add = webdata['value-proposition']
+            for each in model_to_add:
+                try:
+                    foreignItem = ValueProposition.objects.get(value=each,project=project)
+                    getattr(instance, 'value_propositions').add(foreignItem)
+                except Exception as e:
+                    print(e)
 
-        except Exception as e:
-            print("Error:", e)
-            return JsonResponse({"message": "Error occurred while adding new Value Proposition"}, status=500)
+        if 'customer-segment' in webdata and len(webdata['customer-segment'])>0:
+            print("inside customer_segment")
+            model_to_add = webdata['customer-segment']
+            for each in model_to_add:
+                try:
+                    foreignItem = CustomerSegment.objects.get(customer_segment=each,project=project)
+                    getattr(instance, 'customer_segment').add(foreignItem)
+                except Exception as e:
+                    print(f"error in customer-segment {e}")
 
-    elif model_to_submit == "customer-segment":
-        pass
+        if 'customer-relationship' in webdata and len(webdata['customer-relationship']) > 0:
+            print("inside CustomerRelationship")
+            model_to_add = webdata['customer-relationship']
 
+            for each in model_to_add:
+                print(each)
+                try:
+                    foreignItem = CustomerRelationship.objects.get(relationship=each,project=project)
+                    getattr(instance, 'customer_relationship').add(foreignItem)
+                except Exception as e:
+                    print(e)
 
-handler_functions = {
-    "value-proposition": ValueProposition.objects.get,
-    "customer-segment": CustomerSegment.objects.get,
-    "channel": Channel.objects.get,
-    "customer-relationship": CustomerRelationship.objects.get,
-    "revenue-stream": RevenueStreams.objects.get,
-    "key-resources": KeyResources.objects.get,
-    "key-activities": KeyActivities.objects.get,
-    "key-partnership": KeyPartnership.objects.get,
-    "cost-structure": CostStructure.objects.get,
-}
-handler_field_name = {
-    "value-proposition": "value",
-    "customer-segment": "customer_segment",
-    "channel": "channels",
-    "customer-relationship": "relationship",
-    "revenue-stream": "revenue",
-    "key-resources": "key_resource",
-    "key-activities": "key_activity",
-    "key-partnership": "key_partner",
-    "cost-structure": "cost",
-}
+        if 'channels' in webdata:
+            print("inside channels")
+            model_to_add = webdata['channels']
+            for each in model_to_add:
+                print(each)
+                try:
+                    foreignItem = Channel.objects.get(channels=each,project=project)
+                    getattr(instance, 'channel').add(foreignItem)
+                    print("channel added")
+                except Exception as e:
+                    print(e)
+        data = {'value':value, 'description': description, 'id': instance.id, 'message': f"{webdata['model']} is added successfully"}
+        return JsonResponse({"data": data, "section": webdata['model']}, status=200)
 
-
+    except Exception as e:
+        print(e)
 
 
 def fetchforcanvas(request):
@@ -780,27 +781,23 @@ def fetchforcanvas(request):
             print(projectID)
             project = Project.objects.get(id=projectID)
             print(project)
-            if func == 'customer-segment':
-                data = [(vp.value,vp.id) for vp in project.value_propositions.all()]
-            elif func == 'channels':
-                data = [(ch.channels, ch.id) for ch in project.channel.all()]
-            elif func == 'customer-relationship':
-                data = [(cr.relationship, cr.description, cr.id) for cr in project.customer_relationship.all()]
-            elif func == 'revenue-stream':
-                data = [(rs.revenue, rs.id) for rs in project.revenue_stream.all()]
-            elif func == 'key-resources':
-                data = [(kr.key_resource, kr.description, kr.id) for kr in project.key_resources.all()]
-            elif func == 'key-activities':
-                data = [(ka.key_activity, ka.description, ka.id) for ka in project.key_activity.all()]
-            elif func == 'key-partnerships':
-                data = [(kp.key_partner, kp.description, kp.id) for kp in project.key_partner.all()]
-            elif func == 'cost-structure':
-                data = [(cs.cost, cs.description, cs.id) for cs in project.cost_structure.all()]
+            if func == 'channel' or func == 'revenue-stream' or func == 'customer-relationship':
+                data = {'customer-segment': [cs.customer_segment for cs in project.customer_segments.all()]}
+            elif func == 'key-resources' or func == 'key-activities' or func == 'key-partnerships' or func == 'cost-structure':
+                data = {
+                    'value-proposition': [vp.value for vp in project.value_propositions.all()],
+                    'customer-segment': [cs.customer_segment for cs in project.customer_segments.all()],
+                    'customer-relationship': [cr.relationship for cr in project.customer_relationship.all()],
+                    'channels': [ch.channels for ch in project.channel.all()]
+                }
+            elif func == 'customer-segment':
+                data = {'value-proposition': [vp.value for vp in project.value_propositions.all()]}
+            elif func == "value-proposition":
+                data={}
             else:
-                key= "invalid function"
-                error(key)
-            
-            return JsonResponse(data, safe=False)
+                raise ValueError("Invalid function: {}".format(func))
+            print(data)
+            return JsonResponse(data,status=200,safe=False)
         
         else:
             return Http404("Access Denied")
@@ -808,3 +805,40 @@ def fetchforcanvas(request):
 
 def handler404(request,exception):
     return render(request, "404.html")
+
+
+handler_field_name = {
+    "value-proposition": "value",
+    "customer-segment": "customer_segment",
+    "channel": "channels",
+    "customer-relationship": "relationship",
+    "revenue-stream": "revenue",
+    "key-resources": "key_resource",
+    "key-activities": "key_activity",
+    "key-partnership": "key_partner",
+    "cost-structure": "cost",
+}
+
+handler_functions = {
+    "value-proposition": ValueProposition.objects.get,
+    "customer-segment": CustomerSegment.objects.get,
+    "channel": Channel.objects.get,
+    "customer-relationship": CustomerRelationship.objects.get,
+    "revenue-stream": RevenueStreams.objects.get,
+    "key-resources": KeyResources.objects.get,
+    "key-activities": KeyActivities.objects.get,
+    "key-partnership": KeyPartnership.objects.get,
+    "cost-structure": CostStructure.objects.get,
+}
+
+addincanvasfunctions = {
+    "value-proposition": ValueProposition.objects,
+    "customer-segment": CustomerSegment.objects,
+    "channel": Channel.objects,
+    "customer-relationship": CustomerRelationship.objects,
+    "revenue-stream": RevenueStreams.objects,
+    "key-resources": KeyResources.objects,
+    "key-activities": KeyActivities.objects,
+    "key-partnership": KeyPartnership.objects,
+    "cost-structure": CostStructure.objects,
+}
