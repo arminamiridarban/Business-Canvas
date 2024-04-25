@@ -585,15 +585,22 @@ function addInput(idOfForm,data){
 
 function editInCanvas(event) {
     let action = event.target;
+    console.log(action);
     console.log("in the editInCanvas function");
     let number = action.value;
     let div = action.closest('[data-id]');
     console.log(div);
     let elements = div.querySelectorAll('input, textarea');
     console.log(elements);
-    if (action.innerHTML === "Edit"){
+    if (action.classList.contains("fa-pen") ){
+        console.log(event);
+        if (div.querySelector('textarea')){
+            expandDiscription(event);
+        }
+        
         console.log("Change the name of the button and make them editable");
-        action.innerHTML = "Save";
+        action.classList.remove('fa-pen');
+        action.classList.add('fa-check');
         elements.forEach(item => {
             console.log(item);
             if (item.disabled || item.hasAttribute('readonly')) {
@@ -632,7 +639,11 @@ function editInCanvas(event) {
         })
         .then(response => response.json())
         .then(data => {
-            action.innerHTML = "Edit";
+            action.classList.add('fa-pen');
+            action.classList.remove("fa-check");
+            if (div.querySelector('textarea')){
+                expandDiscription(event);
+            }
             elements.forEach(element =>{
                 element.setAttribute('readonly','true');
                 element.style.backgroundColor = "transparent";
@@ -937,7 +948,7 @@ function showNotification(text) {
 }
 
 function expandDiscription(event){
-    console.log(event.target);
+    console.log(event);
     let x = (event.target).parentNode;
 
     let div = x.parentNode.parentNode;
