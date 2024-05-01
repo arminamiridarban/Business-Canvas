@@ -802,6 +802,45 @@ def fetchforcanvas(request):
         else:
             return Http404("Access Denied")
 
+#### Complete this section to retrive View in Canvas
+@login_required
+def ViewInCanvas(request):
+    user = request.user
+    webdata = json.loads(request.body)
+    projectname= webdata['projectname']
+    section= webdata['section']
+    itemID= webdata['itemID']
+    try:
+        project= Project.objects.get(name=projectname, user=user)
+    except ObjectDoesNotExist:
+        return JsonResponse({"message":"Item Doesn't Exist"}, status=500)
+
+    original_item= handler_functions[section](pk=itemID)
+    
+    print(f"original_item is {original_item}")
+
+    cs = original_item.customer_segment.all()
+    val= []
+    channel = []
+    customer_relationship = []
+    revenue_stream = []
+    for __ in cs:
+        val.append(__.value_propositions.all())
+        channel.append(__.channel.all())
+        #customer_relationship.append(__.customer_segment.all())
+        revenue_stream.append(__.revenue_stream.all())
+
+
+    print(cs)
+    print(val)
+    print(channel)
+    print(revenue_stream)
+
+
+
+
+
+
 
 def handler404(request,exception):
     return render(request, "404.html")

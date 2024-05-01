@@ -221,7 +221,10 @@ html, body {
     padding: 5%;
     list-style-type: none;
 }
-
+.close-button:hover{
+    color: #f00000;
+    font-size: x-large;
+}
 .description {
     display: none;
     opacity: 0;
@@ -326,7 +329,11 @@ html, body {
     outline: none;
     border-radius: 5px;
     margin: 5px 0;
+    overflow: auto; /* Ensures scrollbars appear when needed */
+    white-space: pre-wrap; /* Wraps text and preserves whitespace formatting */
+    word-wrap: break-word; 
 }
+
 
 
 .buildCanvasAdd {

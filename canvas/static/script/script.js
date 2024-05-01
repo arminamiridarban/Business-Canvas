@@ -36,6 +36,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             });
         });
+        document.querySelectorAll(".BuildCanvasViewID").forEach(item =>{
+            item.addEventListener('click',(event)=>{
+                console.log("View Clicked");
+                ViewInCanvas(event);
+            })
+        });
     } else if (window.location.pathname.startsWith("/canvas")) {
         document.querySelectorAll(".infobutton").forEach(button => {
             button.addEventListener("click", (event) => {
@@ -51,6 +57,38 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }    
 });
+
+function ViewInCanvas(event){
+    console.log("inside View In Canvas Function");
+    action = event.target;
+    section = action.dataset.type;
+    console.log(section);
+    itemID = action.value;
+    console.log(itemID);
+    let csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
+    let projectname = document.querySelector('#projectname').value;
+    fetch('/ViewInCanvas',{
+        method: 'POST',
+        headers:{
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrfToken,
+        },
+        body: JSON.stringify({
+            projectname: projectname,
+            section: section,
+            itemID:itemID,
+        })
+    })
+    .then(response => response.json())
+    .then(data =>{
+        console.log(data);
+    })
+    .catch(error =>{
+        console.log("error happened");
+        console.log(error);
+    })
+}
+
 
 function addValueField() {
     let valueNumbers = document.querySelector('#fieldcreator').value;
@@ -703,8 +741,8 @@ function addInCanvas(event){
     tempInput.dataset.func = func ;
     tempInput.dataset.value = 'value';
     let closeButton = document.createElement('span');
-    closeButton.innerHTML = '&times;';
-    closeButton.classList.add('close-button');
+    closeButton.innerHTML = '';
+    closeButton.classList.add('close-button', 'fa-solid', 'fa-xmark');
 
     let projectID = document.querySelector('#projectname').dataset['id'];
     let csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
