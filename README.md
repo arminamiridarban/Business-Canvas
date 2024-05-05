@@ -2,7 +2,7 @@
 
 ## Introduction
 
-The Digital Business Canvas is a sophisticated web application aimed at helping entrepreneurs and small businesses strategically map out their business models. Unlike typical business tools, this application integrates advanced database interactions and dynamic web features to provide a comprehensive platform for business planning and analysis.
+The Digital Business Canvas is a sophisticated web application aimed at helping entrepreneurs and small businesses strategically map out their business models. Unlike typical business tools, this application integrates advanced database interactions and dynamic web features to provide a comprehensive platform for business planning and analysis. By using this web-application, user would be allowed to map all his/her business and have a better understanding of each layer of their project. Moreover, the user is allowed to map their adverseries in the market and understand the underlining and briliance of their project among their opponents.
 
 ## Distinctiveness and Complexity
 
@@ -17,6 +17,7 @@ Unlike typical project templates that revolve around straightforward CRUD operat
 - `db.sqlite3`: Database file containing all application data.
 - `requirements.txt`: Lists all Python packages needed to run the application.
 - `static/`: Contains CSS, JavaScript, and image files.
+  - `picture`: The static pictures of the website is located in this folder.
   - `styles.css`: Custom styles.
   - `script.js`: Core JavaScript functions for dynamic interactions.
 - `templates/`: HTML files for rendering website content.
@@ -30,6 +31,13 @@ Unlike typical project templates that revolve around straightforward CRUD operat
 3. Run `python3 manage.py makemigrations` and `python3 manage.py migrate` to set up the database.
 4. Start the server using `python3 manage.py runserver`.
 5. Open `http://127.0.0.1:8000/` in your web browser to access the application.
+
+## Usage
+
+- Tutorial: To user this application, you are free to use Tutorial tab, on the right-top corner of the screen in the nav bar. In the tutorial section, you will have a clear understanding of how to use each section and what are the sections. By clicking of each item, the section expands ith more detail and the question you need to ask your self to fill each section. 
+- Login/Register: In order to use the application, you need to Login/Register. you can navigate to this section which is located in the nav bar and easily by providing a username and password, you would be allowed to use all the features of the app.
+- Create Business Canvas: In this section, you can make your Business Canvas. Feel free to first use toturial of the app and then loop through each part of this section.
+- Your Canvas: This is the section that you can see all the models which you've built before. you have full access to Edit, Add, Remove and update each section of the Canvas.
 
 ## Additional Information
 
