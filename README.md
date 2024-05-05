@@ -27,7 +27,7 @@ Unlike typical project templates that revolve around straightforward CRUD operat
 ## How to Run the Application
 
 1. Clone the repository to your local machine.
-2. Install required Python packages with `pip3 install django` and `pip install python3`.
+2. Install required Python packages with `pip3 install django` and `pip install python3`.Alternatively, you can install all dependencies at once by running `pip3 install -r requirements.txt` in your terminal.
 3. Run `python3 manage.py makemigrations` and `python3 manage.py migrate` to set up the database.
 4. Start the server using `python3 manage.py runserver`.
 5. Open `http://127.0.0.1:8000/` in your web browser to access the application.
