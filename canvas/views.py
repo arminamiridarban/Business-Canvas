@@ -6,11 +6,6 @@ from django.contrib.auth.decorators import login_required
 from .models import *
 import json
 from django.core.exceptions import PermissionDenied, ObjectDoesNotExist 
-#from openai import OpenAI
-
-
-#OPENAI_API_KEY = "sk-proj-J2qbdXR0oGEb13Nlc9DUT3BlbkFJKGhaRdxUevTYQoRzIcqW"
-#client = OpenAI(api_key=OPENAI_API_KEY)
 
 def tutorial(request):
     if request.method == "GET":
