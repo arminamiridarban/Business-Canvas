@@ -11,7 +11,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <script src="https://kit.fontawesome.com/2710ed4f95.js" crossorigin="anonymous"></script>
         <meta charset="utf-8">
-        {% load static %}
     </head>
     <header style="background-color: #000000;">
         <nav class="burger" onclick="burger(this)">
@@ -77,6 +76,20 @@
     <body>
         {%block body%}{%endblock%}
     </body>
+    <footer>
+        <div class="pl-5">
+            <img src="{% static 'picture/university.jpg' %}" alt="University Logo" style="width: 100%; max-width: 300px; height: auto; border-radius: 20px;">
+        </div>
+        <div>
+            <p>&copy; Copyright 2024</p>
+            <p>All right reserved for Poliba</p>
+            <p>Powered by Armin Amiri Darban</p>
+        </div>
+        <div style="">
+            <address>Via Edoardo Orabona, 4, 70126 Bari BA</address>
+            <p>Tel: 080 596 2111</p>
+        </div>
+    </footer>
 
 <script>
     function burger(x) {

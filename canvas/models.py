@@ -28,7 +28,7 @@ class Project(models.Model):
 class ValueProposition(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="value_propositions")
     value = models.CharField(max_length=255)
-    description = models.CharField(max_length=1023)
+    description = models.CharField(max_length=1023, blank=True,null=True)
 
     def __str__(self):
         return self.value
@@ -37,6 +37,7 @@ class CustomerSegment(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="customer_segments")
     value_propositions = models.ManyToManyField(ValueProposition, related_name="customer_segments")
     customer_segment = models.CharField(max_length=255)
+    description = models.CharField(max_length=1023, blank=True,null=True)
 
     def __str__(self):
         return self.customer_segment
@@ -44,8 +45,9 @@ class CustomerSegment(models.Model):
 
 class Channel(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="channel")
-    customer_segments = models.ManyToManyField(CustomerSegment, related_name="channel")
+    customer_segment = models.ManyToManyField(CustomerSegment, related_name="channel")
     channels = models.CharField(max_length=255)
+    description = models.CharField(max_length=1023, blank=True,null=True)
 
     def __str__(self):
         return self.channels
@@ -54,7 +56,7 @@ class CustomerRelationship(models.Model):
     project=models.ForeignKey(Project,on_delete=models.CASCADE, related_name="customer_relationship")
     customer_segment = models.ManyToManyField(CustomerSegment, related_name="customer_relationship")
     relationship=models.CharField(max_length=511)
-    description=models.TextField(max_length=1023,blank=True)
+    description = models.CharField(max_length=1023, blank=True,null=True)
 
     def __str__(self):
         return f"{self.relationship} , {self.description}"
@@ -64,6 +66,7 @@ class RevenueStreams(models.Model):
     project=models.ForeignKey(Project,on_delete=models.CASCADE, related_name="revenue_stream")
     customer_segment = models.ManyToManyField(CustomerSegment, related_name="revenue_stream")
     revenue = models.CharField(max_length=1023)
+    description = models.CharField(max_length=1023, blank=True,null=True)
 
     def __str__(self):
         return self.revenue
@@ -75,7 +78,7 @@ class KeyResources(models.Model):
     customer_relationship = models.ManyToManyField(CustomerRelationship, related_name="key_resources")
     channel = models.ManyToManyField(Channel, related_name="key_resources")
     key_resource = models.CharField(max_length=255)
-    description = models.TextField(max_length=1023,blank=True)
+    description = models.CharField(max_length=1023, blank=True,null=True)
 
     def __str__(self):
         return f"{self.key_resource}, {self.description}"
@@ -87,7 +90,7 @@ class KeyActivities(models.Model):
     customer_relationship = models.ManyToManyField(CustomerRelationship, related_name="key_activity")
     channel = models.ManyToManyField(Channel, related_name="key_activity")
     key_activity = models.CharField(max_length=255)
-    description = models.TextField(max_length=1023,blank=True)
+    description = models.CharField(max_length=1023, blank=True,null=True)
 
     def __str__(self):
         return f"{self.key_activity}, {self.description}"
@@ -99,7 +102,7 @@ class KeyPartnership(models.Model):
     customer_relationship = models.ManyToManyField(CustomerRelationship, related_name="key_partner")
     channel = models.ManyToManyField(Channel, related_name="key_partner")
     key_partner = models.CharField(max_length=255)
-    description = models.TextField(max_length=1023,blank=True)
+    description = models.CharField(max_length=1023, blank=True,null=True)
 
     def __str__(self):
         return f"{self.key_partner} ,{self.description}"
@@ -111,7 +114,7 @@ class CostStructure(models.Model):
     customer_relationship = models.ManyToManyField(CustomerRelationship, related_name="cost_structure",blank=True)
     channel = models.ManyToManyField(Channel, related_name="cost_structure",blank=True)
     cost = models.CharField(max_length=255)
-    description = models.TextField(max_length=1023,blank=True)
+    description = models.CharField(max_length=1023, blank=True,null=True)
 
     def __str__(self):
         return f"{self.cost},{self.description}"

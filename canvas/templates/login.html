@@ -1,7 +1,7 @@
 {%extends 'layout.html'%}
 {%block title%} Login {%endblock%}
 {%block body%}
-<div style="display:flex; justify-content: center; padding: 10% 25% 0 25%;flex-direction: column; align-items: center;" >
+<div style="display:flex; justify-content: center;flex-direction: column; align-items: center; height: 100%" >
     <div id="messagediv" class="canvasMessage">
         {%if message%}
         <p>{{message}}</p>
@@ -16,7 +16,7 @@
         </label>  
         <label style="padding: 0 10px 0 10px;">Register</label>
     </div>
-    <form name="registerform" method="post" action="{%url 'login'%}" style="display: none;" id="register">
+    <form name="registerform" method="post" action="{%url 'login'%}" style="display: none;" id="register" class="form">
         {% csrf_token %}
         <div class="form-group text-center">
             <h3>Register</h3>
@@ -38,7 +38,7 @@
         </div>
     </form>
 
-    <form method="post" action="{% url 'login'%}" name="loginform" style="display: block;" id="login">
+    <form method="post" action="{% url 'login'%}" name="loginform" style="display: block;" id="login" class="form">
         {%csrf_token%}
         <div class="form-group text-center">
             <h3>Login</h3>

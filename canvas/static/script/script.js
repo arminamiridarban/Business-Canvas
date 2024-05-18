@@ -42,6 +42,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 ViewInCanvas(event);
             })
         });
+        
+
     } else if (window.location.pathname.startsWith("/canvas")) {
         document.querySelectorAll(".infobutton").forEach(button => {
             button.addEventListener("click", (event) => {
@@ -62,9 +64,8 @@ function ViewInCanvas(event){
     console.log("inside View In Canvas Function");
     action = event.target;
     section = action.dataset.type;
-    console.log(section);
     itemID = action.value;
-    console.log(itemID);
+
     let csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
     let projectname = document.querySelector('#projectname').value;
     fetch('/ViewInCanvas',{
@@ -80,9 +81,22 @@ function ViewInCanvas(event){
         })
     })
     .then(response => response.json())
-    .then(data =>{
-        console.log(data);
-    })
+    .then(data => {
+        var datadic = data.data;
+        document.querySelectorAll("input[data-viewID]").forEach(item =>{
+            item.style.backgroundColor = "transparent";
+        });
+        for (let key in datadic) {
+            let maindiv = document.querySelector(`.${key}`);
+            console.log(maindiv);
+            let x = datadic[key];
+            for (let i = 0; i < x.length; i++) {
+                let value = x[i];
+                let dummyitem = maindiv.querySelector(`input[data-viewId="${value}"]`);
+                dummyitem.style.backgroundColor = "#DC6B19";
+            }
+        }
+    })    
     .catch(error =>{
         console.log("error happened");
         console.log(error);
@@ -175,8 +189,6 @@ function saveCustomerSegment(customerSegmentForm){
     let allCustomerSegmentsList = [];
     let allCustomerSegments = form.querySelectorAll('.tempInputDiv');
     allCustomerSegments.forEach(element =>{
-        console.log("this is the element");
-        console.log(element);
         if (element.classList.contains("tempInputDiv")) {
             console.log("this is item we want");
             console.log(element);
@@ -184,13 +196,14 @@ function saveCustomerSegment(customerSegmentForm){
             console.log(customerSegmentinput);
             let customerSegmentselect = element.querySelector('select');
             let selectValues = customerSegmentselect.selectedOptions;
-            console.log(selectValues);
+            let description = element.querySelector('textarea').value;
+            console.log(description);
             let values = [];
             for (let i=0; i<selectValues.length;i++){
                 values.push(selectValues[i].value);
             }
             console.log(values);
-            allCustomerSegmentsList.push({ customersegment: customerSegmentinput, valueproposition: values });
+            allCustomerSegmentsList.push({ customersegment: customerSegmentinput, valueproposition: values, description: description });
         }
     });
     console.log(allCustomerSegmentsList);
@@ -234,13 +247,14 @@ function saveChannels(channelForm){
     formDivs.forEach(element=>{
         if (element.classList.contains("tempInputDiv")) {
             let channel = element.querySelector('input').value;
+            let description = element.querySelector('textarea').value;
             let channelSelect = element.querySelector('select');
             let channelOptions = channelSelect.selectedOptions;
             let values = [];
             for (let i=0; i<channelOptions.length; i++){
                 values.push(channelOptions[i].value);
             }
-            allChannelsList.push({channel: channel, customersegment:values});
+            allChannelsList.push({channel: channel, customersegment:values, description:description});
         }
     })
     let csrfToken = form.querySelector('input[name="csrfmiddlewaretoken"]').value;
@@ -326,13 +340,14 @@ function saveRevenueStream(Formid){
         if (!element.classList.contains("not")){
             let revenue = element.querySelector('input').value;
             let revenue_select_element= element.querySelector('select');
+            let description = element.querySelector('textarea').value;
             let customer_segment = revenue_select_element.selectedOptions;
             let customer_segment_list = [];
             for (let i=0; i<customer_segment.length;i++){
                 customer_segment_list.push(customer_segment[i].value);
                 console.log(customer_segment[i].value);
             }
-            revenue_final.push({revenue:revenue,customer_segment:customer_segment_list});
+            revenue_final.push({revenue:revenue,customer_segment:customer_segment_list, description:description});
         }
     });
     let csrfToken = form.querySelector('input[name="csrfmiddlewaretoken"]').value;
@@ -528,12 +543,12 @@ function addInput(idOfForm,data){
         tempInputDiv.append(tempSelect);
     }
 
-    if (name === "relationship" || different.includes(name)){
-        let temptextarea= document.createElement('textarea');
-        temptextarea['placeholder']= "Enter Description";
-        temptextarea.classList.add('tempTextarea');
-        tempInputDiv.append(temptextarea);
-    }
+
+    let temptextarea= document.createElement('textarea');
+    temptextarea['placeholder']= "Enter Description";
+    temptextarea.classList.add('tempTextarea');
+    tempInputDiv.append(temptextarea);
+
     if (different.includes(name)){
         console.log("not key resource create group select");
         let tempSelect = document.createElement('select');
@@ -830,9 +845,10 @@ function addInCanvas(event){
             tempInputLabel.textContent = 'Customer Segment:';
             closeButton.dataset.addButton = 'customer-segment-add-button';
             break;
-        case "channels":
+        case "channel":
+            console.log("here");
             tempInputLabel.textContent = 'Channels:';
-            closeButton.dataset.addButton = 'channels-add-button';
+            closeButton.dataset.addButton = 'channel-add-button';
             break;
         case "revenue-stream":
             tempInputLabel.textContent = 'Revenue Streams:';
@@ -841,9 +857,13 @@ function addInCanvas(event){
     }
 
     closeButton.onclick = function() {
+        console.log(closeButton);
         let y = closeButton.closest('div');
+        console.log(y);
         let x = closeButton.dataset.addButton;
+        console.log(x);
         y.remove();
+        console.log(document.querySelector(`#${x}`));
         document.querySelector(`#${x}`).style.display = 'block';
         
     };
@@ -948,7 +968,7 @@ function addNewItemDivInCanvas (divdata){
     let instance = maindiv.querySelector('[data-id]').cloneNode(true);
     console.log("the maindiv is");
     console.log(maindiv);
-    
+
     instance.setAttribute('data-id', `${data.id}`);
     instance.querySelector('[data-type=value]').setAttribute('value',`${data.value}`);
     instance.querySelector('[data-type=value]').onclick = expandDiscription;
@@ -959,7 +979,7 @@ function addNewItemDivInCanvas (divdata){
     if (instance.querySelector('[data-type="description"]')){
         instance.querySelector('[data-type="description"]').textContent = data.description;
     }
-
+    instance.querySelector('input').setAttribute('data-viewid',`${data.id}`);
     maindiv.append(instance);
 
     console.log(`data.section is ${divdata.section}`);

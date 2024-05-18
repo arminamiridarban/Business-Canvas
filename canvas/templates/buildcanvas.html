@@ -1,4 +1,5 @@
 {% extends 'layout.html' %}
+{% load static %}
 
 {% block title %}Your Model{% endblock %}
 
@@ -27,7 +28,7 @@
         <p>User: {{user.username}} </p>
         <input type="hidden" value="{{project.name}}" id="projectname" data-id="{{project.id}}">
     </div>
-    <div class="key-partner">
+    <div class="key-partner" id="key-partner-main-div">
         <div class="buildCanvasAdd">
             <h4>Key Partnership</h4>
             <button type="button" value="key-partnership" id="key-partnership-add-button" class="buildCanvasAddButton fa-solid fa-plus"></button>
@@ -35,11 +36,11 @@
         
         {% if key_partnerships %}
         {% for kp in key_partnerships%}
-        <div data-id="{{ kp.2 }}" class="expandable">
+        <div data-id="{{ kp.2 }}">
             <div class="canvaseditbuttondiv">
-                <div>
+                <div class="expandable">
                     <span>&#10003;</span>
-                    <input type="text" readonly class="buildCanvasInput" data-type="value" value="{{ kp.0 }}" style="font-weight: bold;">
+                    <input type="text" readonly class="buildCanvasInput" data-type="value" value="{{ kp.0 }}" data-viewID="{{kp.2}}">
                 </div>
                 <div>
                     <button type="button" value="{{kp.2}}" data-type="key-partnership" data-mode="edit" class="BuildCanvasEditID fa-solid fa-pen"></button>
@@ -57,7 +58,7 @@
     <div class="key-activities" id="key-activities-main-div">
         <div class="buildCanvasAdd">
             <h4>Key Activities</h4>
-            <button type="button" value="key-activities" id="key-activities-add-button" class=" fa-solid fa-plus"></button>
+            <button type="button" value="key-activities" id="key-activities-add-button" class=" fa-solid fa-plus buildCanvasAddButton"></button>
         </div>
         {% if key_activities %}
             {% for ka in key_activities%}
@@ -65,7 +66,7 @@
                 <div class="canvaseditbuttondiv">
                     <div class="expandable">
                         <span>&#10003;</span>
-                        <input type="text" readonly class="buildCanvasInput" data-type="value" value="{{ ka.0 }}" style="font-weight: bold;">
+                        <input type="text" readonly class="buildCanvasInput" data-type="value" value="{{ ka.0 }}" data-viewID="{{ka.2}}">
                     </div>
                     <div>
                         <button type="button" value="{{ka.2}}" data-type="key-activities" data-mode="edit" class="BuildCanvasEditID fa-solid fa-pen"></button>
@@ -88,10 +89,10 @@
         {% if value_propositions %}
                 {% for val in value_propositions %}
                 <div data-id="{{ val.2 }}"> 
-                    <div class="canvaseditbuttondiv ">
+                    <div class="canvaseditbuttondiv">
                         <div class="expandable">
                             <span>&#10003;</span>
-                            <input type="text" readonly class="buildCanvasInput" data-type="value" data-model="value-proposition" data-id="{{val.2}}" style="font-weight: bold;" value="{{ val.0 }}">
+                            <input type="text" readonly class="buildCanvasInput" style="width:200px" data-type="value" data-model="value-proposition" data-id="{{val.2}}" value="{{ val.0 }}" data-viewID="{{val.2}}">
                         </div>
                         <div>
                             <button type="button" value="{{val.2}}" data-type="value-proposition" data-mode="edit" class="BuildCanvasEditID fa-solid fa-pen"></button>
@@ -119,7 +120,7 @@
                     <div class="canvaseditbuttondiv">
                         <div>
                             <span>&#10003;</span>
-                            <input type="text" readonly class="buildCanvasInput" data-type="value" value="{{ cr.0 }}" style="font-weight: bold;">    
+                            <input type="text" readonly class="buildCanvasInput" data-type="value" value="{{ cr.0 }}" data-viewID="{{cr.2}}" >    
                         </div>
                         <div>
                             <button type="button" value="{{cr.2}}" data-type="customer-relationship" data-mode="edit" class="BuildCanvasEditID fa-solid fa-pen"></button>
@@ -143,17 +144,20 @@
         <div>
             {% if customer_segments %}
                 {% for cs in customer_segments%}
-                <div data-id="{{ cs.1 }}"> 
+                <div data-id="{{ cs.1 }}" class="expandable"> 
                     <div class="canvaseditbuttondiv">
                         <div>
                             <span>&#10003;</span>
-                            <input type="text" readonly class="buildCanvasInput" data-type="value" value="{{ cs.0 }}" style="font-weight: bold;">    
+                            <input type="text" readonly class="buildCanvasInput" data-type="value" value="{{ cs.0 }}" data-viewID="{{cs.1}}" >    
                         </div>
                         <div>
                             <button type="button" value="{{cs.1}}" data-type="customer-segment" data-mode="edit" class="BuildCanvasEditID fa-solid fa-pen"></button>
                             <button type="button" value="{{cs.1}}" data-type="customer-segment" data-mode="remove" class="BuildCanvasRemoveID fa-solid fa-trash"></button>
                             <button type="button" value="{{cs.1}}" data-type="customer-segment" data-mode="view" class="BuildCanvasViewID fa-solid fa-eye"></button>
                         </div>
+                    </div>
+                    <div style="display: flex; flex-direction: column;">
+                        <textarea class="buildCanvasTextarea" data-type="description" readonly >{{ cs.2 }}</textarea>
                     </div>
                 </div>
                 {% endfor%}
@@ -172,7 +176,7 @@
                     <div class="canvaseditbuttondiv">
                         <div>
                             <span>&#10003;</span>
-                            <input type="text" readonly class="buildCanvasInput" data-type="value" value="{{ key.0 }}" style="font-weight: bold;">
+                            <input type="text" readonly class="buildCanvasInput" data-type="value" value="{{ key.0 }}" data-viewID="{{key.2}}">
                         </div>
                         <div>
                             <button type="button" value="{{key.2}}" data-type="key-resources" data-mode="edit" class="BuildCanvasEditID fa-solid fa-pen"></button>
@@ -191,23 +195,25 @@
     <div class="channel" id="channel-main-div">
         <div class="buildCanvasAdd">
             <h4>Channels</h4>
-            <button type="button" value="channel" id="channels-add-button" class="buildCanvasAddButton fa-solid fa-plus"></button>
+            <button type="button" value="channel" id="channel-add-button" class="buildCanvasAddButton fa-solid fa-plus"></button>
         </div>
         <div>
             {% if channels %}
                 {% for ch in channels%}
-                <div data-id="{{ ch.1 }}"> 
+                <div data-id="{{ ch.1 }}" class="expandable"> 
                     <div class="canvaseditbuttondiv">
                         <div>
                             <span>&#10003;</span>
-                            <input type="text" readonly class="buildCanvasInput" data-type="value" value="{{ ch.0 }}" style="font-weight: bold;">
+                            <input type="text" readonly class="buildCanvasInput" data-type="value" value="{{ ch.0 }}" data-viewID="{{ch.1}}">
                         </div>
                         <div>
                             <button type="button" value="{{ch.1}}" data-type="channel" data-mode="edit" class="BuildCanvasEditID fa-solid fa-pen"></button>
                             <button type="button" value="{{ch.1}}" data-type="channel" data-mode="remove" class="BuildCanvasRemoveID fa-solid fa-trash"></button>
                             <button type="button" value="{{ch.1}}" data-type="channel" data-mode="view" class="BuildCanvasViewID fa-solid fa-eye"></button>
                         </div>
-                        
+                    </div>
+                    <div style="display: flex; flex-direction: column;">
+                        <textarea class="buildCanvasTextarea" data-type="description" readonly >{{ ch.2 }}</textarea>
                     </div>
                 </div>
                 {% endfor%}
@@ -226,7 +232,7 @@
                     <div class="canvaseditbuttondiv">
                         <div>
                             <span>&#10003;</span>
-                            <input type="text" readonly class="buildCanvasInput" data-type="value" value="{{ cs.0 }}" style="font-weight: bold;">
+                            <input type="text" readonly class="buildCanvasInput" data-type="value" value="{{ cs.0 }}" data-viewID="{{cs.2}}" style="width: auto;">
                         </div>
                         <div>
                             <button type="button" value="{{cs.2}}" data-type="cost-structure" data-mode="edit" class="BuildCanvasEditID fa-solid fa-pen"></button>
@@ -250,17 +256,20 @@
         <div>
             {% if revenue_streams %}
                 {% for re in revenue_streams%}
-                <div data-id="{{ re.1 }}"> 
+                <div data-id="{{ re.1 }}" class="expandable"> 
                     <div class="canvaseditbuttondiv">
                         <div>
                             <span>&#10003;</span>
-                            <input type="text" readonly class="buildCanvasInput" data-type="value" value="{{ re.0 }}" style="font-weight: bold;">
+                            <input type="text" readonly class="buildCanvasInput" data-type="value" value="{{ re.0 }}" data-viewID="{{re.1}}" style="width: 400px;">
                         </div>
                         <div>
                             <button type="button" value="{{re.1}}" data-type="revenue-stream" data-mode="edit" class="BuildCanvasEditID fa-solid fa-pen"></button>
                             <button type="button" value="{{re.1}}" data-type="revenue-stream" data-mode="remove" class="BuildCanvasRemoveID fa-solid fa-trash"></button>
                             <button type="button" value="{{re.1}}" data-type="revenue-stream" data-mode="view" class="BuildCanvasViewID fa-solid fa-eye"></button>
                         </div>
+                    </div>
+                    <div style="display: flex; flex-direction: column;">
+                        <textarea class="buildCanvasTextarea" data-type="description" readonly >{{ re.2 }}</textarea>
                     </div>
                 </div>
                 {% endfor%}
@@ -270,8 +279,12 @@
 </div>
 <form style="display: none;">{%csrf_token%}</form>
 
+
 {% endif %}
 
-
+<div class="chatgpt-div" id="chatgpt_logo">
+    <a href="https://chatgpt.com"><img src="{% static 'picture/chatgpt.jpg' %}" alt=" Logo" class="chatgpt"></a>
+    <p style="color: black;" id="ask_ai">Ask AI</p>
+</div>
 
 {% endblock %}

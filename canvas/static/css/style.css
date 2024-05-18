@@ -10,6 +10,40 @@
     display: none;
     opacity: 0.8;
 }
+.chatgpt-div{
+    position: fixed;
+    right: 2%;
+    bottom: 2%;
+    height: 50px;
+    width: 50px;
+}
+.chatgpt:hover{
+    animation: rotate 3s infinite;
+}
+
+.chatgpt-div:hover #ask_ai {
+    width: 50px;
+
+}
+
+@keyframes rotate {
+    0% {rotate: 0;}
+    50% {rotate: 360deg;}
+    100% {rotate: 0;}
+}
+.chatgpt{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+#ask_ai{
+    width: 0px;
+    overflow: hidden;
+    transition: width 0.5s ease-in-out;
+}
+
 .canvasbutton{
     width:100%;
     justify-content: center;
@@ -46,7 +80,7 @@ html, body {
 }
 .mainbody {
     position: relative;
-    height: calc(100vh - 72px);
+    height: auto;
     z-index: 0;
 }
 
@@ -112,6 +146,32 @@ html, body {
     position: relative;
     height: calc(100vh - 72px);
     z-index: 0;
+}
+footer{
+    width: 100% !important;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    align-items: flex-end;
+    padding: 20px 0 0 0;
+    position: relative;
+    bottom: 0;
+}
+footer div{
+    width: 33%;
+}
+footer p{
+    padding: 0 !important;
+    margin: 0 !important;
+}
+.universityLogo {
+    background-image: url("../picture/university.jpg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: left;
+    width: 100%; /* Make sure the div fills its container */
+    height: 100px; /* Set a fixed height for the logo */
 }
 
 .premium::before {
@@ -204,7 +264,7 @@ html, body {
     max-width: 100% !important;
     display: grid;
     grid-template-columns: 19.5% 19.5% 10.25% 10.25% 19.5% 19.5%;
-    grid-template-rows: auto 1fr 1fr 1fr;
+    grid-template-rows: auto;
     grid-template-areas:
   'key-partner key-activities value-proposition value-proposition customer-relationship customer-segment'
   'key-partner key-resources value-proposition value-proposition channels customer-segment'
@@ -238,12 +298,13 @@ html, body {
 
 
 .grid-container {
-    height: 100%;
+    height: auto;
+    min-height: 100% !important;
     width: 100%;
     max-width: 100% !important;
     display: grid;
-    grid-template-columns: 19.5% 19.5% 10.25% 10.25% 19.5% 19.5%;
-    grid-template-rows: 14% 1fr 1fr 1fr; /* Adjusted grid-template-rows */
+    grid-template-columns: auto;
+    grid-template-rows: 16% auto;
     grid-template-areas:
   'header header header header header header'
   'key-partner key-activities value-proposition value-proposition customer-relationship customer-segment'
@@ -329,11 +390,14 @@ html, body {
     outline: none;
     border-radius: 5px;
     margin: 5px 0;
-    overflow: auto; /* Ensures scrollbars appear when needed */
-    white-space: pre-wrap; /* Wraps text and preserves whitespace formatting */
+    overflow: auto;
+    white-space: pre-wrap; 
     word-wrap: break-word; 
 }
-
+.buildCanvasInput{
+    font-weight: bold !important;
+    cursor: pointer;
+}
 
 
 .buildCanvasAdd {
@@ -461,9 +525,13 @@ transform: translateX(26px);
     }
 }
 
-.valueProposition, .tempInputDiv {
+.valueProposition{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+}
+.tempInputDiv {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
 }
 
 .not{
@@ -633,6 +701,7 @@ transform: translateX(26px);
 }
 
 
+
 @media only screen and (max-width: 750px) {
     .valueProposition, .tempInputDiv {
         display: grid;
@@ -645,6 +714,9 @@ transform: translateX(26px);
         flex-direction: column;
     }
     .layoutheader{
+        display: none;
+    }
+    footer{
         display: none;
     }
     
@@ -697,4 +769,11 @@ transform: translateX(26px);
         padding: 10px;
         box-sizing: border-box;
     }   
+    .canvasbutton{
+        height: 30px;
+        margin-bottom: 20px;
+    }
+    footer{
+        display: none;
+    }
 }
