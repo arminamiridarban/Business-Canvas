@@ -799,21 +799,3 @@ handler_functions = {
 def handler404(request,exception):
     return render(request, "404.html")
 
-"""
-@login_required
-def gpt_request(request):
-    user = request.user
-    webdata = json.loads(request.body)
-    user_message = webdata['message]
-
-    completion = client.chat.completions.create(
-    model="gpt-3.5-turbo",
-    messages=[
-        {"role": "system", "content": "You are a master in Business and you are gonna help me in my Business Canvas Aspects"},
-        {"role": "user", "content": user_message}
-    ]
-)
-
-    print(completion.choices[0].message)
-
-"""
