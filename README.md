@@ -18,6 +18,7 @@ Unlike typical project templates that revolve around straightforward CRUD operat
 - `requirements.txt`: Lists all Python packages needed to run the application.
 - `static/`: Contains CSS, JavaScript, and image files.
   - `picture`: The static pictures of the website is located in this folder.
+  - `fontawesome`: This is the Font Awesome Library for icons.
   - `styles.css`: Custom styles.
   - `script.js`: Core JavaScript functions for dynamic interactions.
 - `templates/`: HTML files for rendering website content.
@@ -38,6 +39,7 @@ Unlike typical project templates that revolve around straightforward CRUD operat
 - Login/Register: In order to use the application, you need to Login/Register. you can navigate to this section which is located in the nav bar and easily by providing a username and password, you would be allowed to use all the features of the app.
 - Create Business Canvas: In this section, you can make your Business Canvas. Feel free to first use toturial of the app and then loop through each part of this section.
 - Your Canvas: This is the section that you can see all the models which you've built before. you have full access to Edit, Add, Remove and update each section of the Canvas.
+- Compare Canvas: This section, allowes user to compare Business Canvas of their own projects with other projects. If user is not logged in, they can benefit from comparing all current saved canvas.
 
 ## Additional Information
 
