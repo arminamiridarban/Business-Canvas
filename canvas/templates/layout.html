@@ -6,6 +6,7 @@
         <script src="{% static 'script/script.js' %}"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <link rel="stylesheet" href="{% static 'css/style.css' %}">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -22,6 +23,9 @@
             <ul class="burgerlist">
                 <li>
                     <a href="{% url 'home' %}">Home</a>
+                </li>
+                <li>
+                    <a href="{%url 'comparecanvas'%}">Compare Canvas</a>
                 </li>
                 {%if user.is_authenticated%}
                 <li>
@@ -53,6 +57,9 @@
                 <li>
                     <a href="{% url 'tutorial'%}">Tutorial</a>
                 </li>
+                <li>
+                    <a href="{%url 'comparecanvas'%}">Compare Canvas</a>
+                </li>
                 {%if user.is_authenticated%}
                 <li>
                     <a href="{% url 'canvas' %}">Create your Bussiness Model</a>
@@ -60,12 +67,11 @@
                 <li>
                     <a href="{% url 'buildcanvas'%}">Your Canvas</a>
                 </li>
-                {%endif%}
-                {% if user.is_authenticated %}
                 <li>
                     <a href="{% url 'logout'%}">Logout</a>
                 </li>
                 {% else %}
+                
                 <li>
                     <a href="{% url 'login'%}">Register/Login</a>
                 </li>

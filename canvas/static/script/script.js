@@ -3,6 +3,70 @@ document.addEventListener("DOMContentLoaded", () => {
     } else if (window.location.pathname.startsWith("/login") ){
         
     }
+    else if (window.location.pathname.startsWith("/comparecanvas")){
+
+        document.querySelectorAll('.a').forEach(select => {
+            select.addEventListener('change', () => {
+                let section = select;
+                console.log(section);
+                let csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
+            fetch('/comparecanvas',{
+                method: 'POST',
+                headers:{
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken,
+                },
+                body: JSON.stringify({
+                    project_id: section.value,
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                values = {
+                    "value_propositions":"value",
+                    "customer_segments":"customer_segment",
+                    "channels":"channels",
+                    "revenue_streams":"revenue",
+                    "key_partners":"key_partner",
+                    "key_resources":"key_resource",
+                    "key_activities":"key_activity",
+                    "customer_relationships":"relationship",
+                    "cost_structures":"cost"
+                }
+                document.querySelector(`#${section.name}`).style.display = "block";
+                let main_div = document.querySelector(`#${section.name}`);
+                data = data['data'];
+                for (item in data){
+                    if (item === "project"){
+                        main_div.querySelector('.project').textContent = data[item];
+                    }
+                    else{
+                        let div = main_div.querySelector(`.${item}`);
+                        for (let eachvalue in data[item]) {
+                            if (data[item].hasOwnProperty(eachvalue)) {
+                                console.log(values[item]);
+                                let temp_div = document.createElement('div');
+                                temp_div.classList.add('show-comparison-created-div');
+                                let temp_p_tag = document.createElement('p');
+                                temp_p_tag.textContent = data[item][eachvalue][values[item]];
+                                let temp_textarea_tag = document.createElement('textarea');
+                                temp_textarea_tag.disabled = true;
+                                temp_textarea_tag.textContent = data[item][eachvalue]['description'];
+                                temp_div.append(temp_p_tag);
+                                temp_div.append(temp_textarea_tag);
+                                console.log(temp_div);
+                                div.append(temp_div);
+                            }
+                        }
+                    }
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            })
+            });
+        });
+    }
     else if (window.location.pathname.startsWith("/buildcanvas")) {
         document.querySelectorAll('.buildCanvasTextarea').forEach(item =>{
             item.style.display = 'none';
@@ -638,20 +702,18 @@ function addInput(idOfForm,data){
 
 function editInCanvas(event) {
     let action = event.target;
-    console.log(action);
+    console.log(action)
     console.log("in the editInCanvas function");
     let number = action.value;
     let div = action.closest('[data-id]');
-    console.log(div);
     let elements = div.querySelectorAll('input, textarea');
-    console.log(elements);
     if (action.classList.contains("fa-pen") ){
-        console.log(event);
-        if (div.querySelector('textarea')){
-            expandDiscription(event);
+        let temptextarea = div.querySelector('textarea');
+        if (temptextarea.style.display === "none"){
+            temptextarea.style.display = "block";
         }
-        
-        console.log("Change the name of the button and make them editable");
+        /* Change the name of the button and make them editable */
+
         action.classList.remove('fa-pen');
         action.classList.add('fa-check');
         elements.forEach(item => {
@@ -661,6 +723,7 @@ function editInCanvas(event) {
                 item.style.backgroundColor = "white";
                 item.removeAttribute('readonly');
             }
+
         });
         
     } else {
@@ -1008,7 +1071,6 @@ function showNotification(text) {
 function expandDiscription(event){
     console.log(event);
     let x = (event.target).parentNode;
-
     let div = x.parentNode.parentNode;
     console.log(div);
     let textarea = div.querySelector(".buildCanvasTextarea");

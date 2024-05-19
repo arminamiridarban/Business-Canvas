@@ -22,6 +22,7 @@ urlpatterns = [
     path('fetchforcanvas', views.fetchforcanvas, name="fetchforcanvas"),
     path('tutorial', views.tutorial, name="tutorial"),
     path('ViewInCanvas', views.ViewInCanvas, name="ViewInCanvas"),
+    path('comparecanvas', views.comparecanvas, name="comparecanvas"),
     
 ]
 handler404 = 'canvas.views.handler404'

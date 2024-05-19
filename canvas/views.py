@@ -78,7 +78,7 @@ def valueproposition(request):
                     name=projectname
                     )
         except Exception as e:
-            return JsonResponse("Error happening")
+            return JsonResponse("Error happening",status = 500)
         for k in data:
             try:
                 with transaction.atomic():
@@ -696,7 +696,7 @@ def fetchforcanvas(request):
         else:
             return Http404("Access Denied")
 
-#### Complete this section to retrive View in Canvas
+
 @login_required
 def ViewInCanvas(request):
     user = request.user
@@ -799,3 +799,40 @@ handler_functions = {
 def handler404(request,exception):
     return render(request, "404.html")
 
+
+def comparecanvas(request):
+    user = request.user
+    if request.method == "GET":
+        if user.is_authenticated:
+            user_canvas = Project.objects.filter(user=user)
+            other_canvas = Project.objects.exclude(user=user)
+        else:
+            user_canvas = Project.objects.all()
+            other_canvas = Project.objects.all()
+        return render(request, "comparecanvas.html",{
+            'user_canvas' : user_canvas,
+            'other_canvas' : other_canvas,
+        })
+    elif request.method == "POST":
+        webdata = json.loads(request.body)
+        project_id = webdata['project_id']
+        try:
+            project = Project.objects.get(id=project_id)
+            all = project.get_all_relationships()
+            data = {
+                'project': project.name,
+                'value_propositions': list(all['value_propositions'].values('value','description')),
+                'customer_segments': list(all['customer_segments'].values('customer_segment','description')),
+                'channels': list(all['channels'].values('channels','description')),
+                'customer_relationships': list(all['customer_relationships'].values('relationship','description')),
+                'revenue_streams': list(all['revenue_streams'].values('revenue','description')),
+                'key_resources': list(all['key_resources'].values('key_resource','description')),
+                'key_activities': list(all['key_activities'].values('key_activity','description')),
+                'key_partners': list(all['key_partners'].values('key_partner','description')),
+                'cost_structures': list(all['cost_structures'].values('cost','description'))
+            }
+            print(data)
+            return JsonResponse({"data":data}, safe=False, status=200)
+        except ObjectDoesNotExist:
+            return JsonResponse({'message':"Items doesn't exists"}, status=500)
+            

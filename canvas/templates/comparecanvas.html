@@ -1,0 +1,95 @@
+{% extends 'layout.html' %}
+{%block title%} Compare canvas {%endblock%}
+
+{%block body%}
+<div class="main-comparecanvas">
+    <div class="select-comparecanvas">
+        <div class="user_canvas">
+            {%if user_canvas%}
+            <label for="select_user_canvas">Select Your Canvas:</label>
+            <select name="user_canvas" id="select_user_canvas" class="a">
+                <option value="" disabled selected>Select an option</option>
+                {%for item in user_canvas%}
+                    <option value="{{item.id}}">{{item}}</option>
+                {%endfor%}
+            </select>
+            {%endif%}
+        </div>
+        <div class="other_canvas">
+            {%if other_canvas%}
+            <label for="select_other_canvas" >Select Canvas to Compare:</label>
+            <select name="other_canvas" id="select_other_canvas" class="a">
+                <option value="" disabled selected>Select an option</option>
+                {%for item in other_canvas%}
+                    <option value="{{item.id}}">{{item}}</option>
+                {%endfor%}
+            </select>
+            {%endif%}
+        </div>
+    </div>
+    <div class="show-comparison">
+        <div class="comparecanvas-grid-container" id="user_canvas" style="display: none;">
+            <div class="project" id="user-header"></div>
+            <div class="value_propositions" id="user-value-proposition">
+                <h3 style="padding-bottom: 20px;">Value Proposition</h3>
+            </div>
+            <div class="customer_segments" id="user-customer-segment">
+                <h3 style="padding-bottom: 20px;">customer Segment</h3>
+            </div>
+            <div class="channels" id="user-channels">
+                <h3 style="padding-bottom: 20px;">Channels</h3>
+            </div>
+            <div class="revenue_streams" id="user-revenue-stream">
+                <h3 style="padding-bottom: 20px;">Revenue Streams</h3>
+            </div>
+            <div class="key_partners" id="user-key-partner">
+                <h3 style="padding-bottom: 20px;">Key Partners</h3>
+            </div>
+            <div class="key_resources" id="user-key-resources">
+                <h3 style="padding-bottom: 20px;">Key Resources</h3>
+            </div>
+            <div class="key_activities" id="user-key-activities">
+                <h3 style="padding-bottom: 20px;">Key Activities</h3>
+            </div>
+            <div class="customer_relationships" id="user-customer-relationship">
+                <h3 style="padding-bottom: 20px;">Customer Relationships</h3>
+            </div>
+            <div class="cost_structures" id="user-cost-structure">
+                <h3 style="padding-bottom: 20px;">Cost Structure</h3>
+            </div>            
+        </div>
+        <div class="comparecanvas-grid-container" id="other_canvas" style="display: none;">
+            <div class="project" id="user-header"></div>
+            <div class="value_propositions" id="other-value-proposition">
+                <h3 style="padding-bottom: 20px;">Value Proposition</h3>
+            </div>
+            <div class="customer_segments" id="other-customer-segment">
+                <h3 style="padding-bottom: 20px;">customer Segment</h3>
+            </div>
+            <div class="channels" id="other-channels">
+                <h3 style="padding-bottom: 20px;">Channels</h3>
+            </div>
+            <div class="revenue_streams" id="other-revenue-stream">
+                <h3 style="padding-bottom: 20px;">Revenue Streams</h3>
+            </div>
+            <div class="key_partners" id="other-key-partner">
+                <h3 style="padding-bottom: 20px;">Key Partners</h3>
+            </div>
+            <div class="key_resources" id="other-key-resources">
+                <h3 style="padding-bottom: 20px;">Key Resources</h3>
+            </div>
+            <div class="key_activities" id="other-key-activities">
+                <h3 style="padding-bottom: 20px;">Key Activities</h3>
+            </div>
+            <div class="customer_relationships" id="other-customer-relationship">
+                <h3 style="padding-bottom: 20px;">Customer Relationships</h3>
+            </div>
+            <div class="cost_structures" id="other-cost-structure">
+                <h3 style="padding-bottom: 20px;">Cost Structure</h3>
+            </div>  
+        </div>
+    </div>
+</div>
+{%csrf_token%}
+
+{%endblock%}

@@ -700,7 +700,96 @@ transform: translateX(26px);
     }
 }
 
+.main-comparecanvas{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    content: "";
+}
+.select-comparecanvas{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
 
+.select-comparecanvas div{
+    padding: 20px;
+    width: 100%;
+}
+
+.select-comparecanvas select{
+    width: 50%;
+    height: 40px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.show-comparison{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    width: 100%;
+    gap: 10px;
+    justify-content: center;
+}
+.show-comparison div{
+    border-radius: 20px;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.show-comparison-created-div{
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+}
+.show-comparison-created-div p{
+    width: 30%;
+}
+.show-comparison-created-div textarea{
+    width: 100%;
+    background-color: transparent;
+    color: white;
+    border: none;
+    resize: none;
+}
+
+.comparecanvas-grid-container {
+    height: auto;
+    width: 100%;
+    max-width: 100% !important;
+    display: grid;
+    grid-template-columns: repeat(1,1fr);
+    grid-template-rows: repeat(1,1fr);
+    grid-template-areas:
+  'project'
+  'value_proposition'  
+  'customer_segment'
+  'channels'
+  'revenue_stream'
+  'key_partner'
+  'key_resources'
+  'key_activities'
+  'customer_relationship'
+  'cost_structure';  
+
+    gap: 5px;
+    background-color: rgb(29, 12, 50);
+    padding: 10px;
+    box-sizing: border-box;
+}
+.comparecanvas-grid-container > div{
+    margin: 10px 0 10px 0;
+    border: 1px dashed white;
+}
+.comparecanvas-grid-container > div{
+    margin: 10px 0;
+}
+
+/* Responsive */
 
 @media only screen and (max-width: 750px) {
     .valueProposition, .tempInputDiv {
