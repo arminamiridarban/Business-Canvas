@@ -80,23 +80,20 @@ def valueproposition(request):
         except Exception as e:
             return JsonResponse("Error happening",status = 500)
         for k in data:
-            try:
+            if k['input'] != "":
                 with transaction.atomic():
                     try:
-                        item = ValueProposition.objects.get(
-                            project=project,
-                            value= k['input']
-                        )
-                        item.description = k['description']
-                        item.save()
-                    except:
                         add_value , created = ValueProposition.objects.update_or_create(
                             project=project,
                             value=k['input'],
                             description=k['description']
                             )
-            except Exception as e:
-                print(e)
+                    except Exception as e:
+                        print(e)
+                        return JsonResponse({"message":"There is an error while adding Value Proposition"})
+            else:
+                pass
+
         retrive_updated_values = ValueProposition.objects.filter(
             project=project,
             )
@@ -113,7 +110,6 @@ def customersegment(request):
     if request.method == "POST":
         user=request.user
         webdata=json.loads(request.body)
-        print(webdata)
         projectname= webdata['projectname']
         customersegmentlist= webdata['customersegment']
         try:
@@ -125,33 +121,42 @@ def customersegment(request):
             print(f"Failed to get the project {e}")
             return JsonResponse("The project doesn't exists", 400)
         channels = []
+        print(customersegmentlist)
         for segment in customersegmentlist:
-            values = segment['valueproposition']
-            eachcustomersegment= segment['customersegment']
-            description = segment['description']
-            channels.append(eachcustomersegment)
-            for item in values:
+            if segment['customersegment'] != "":
+                values = segment['valueproposition']
+                eachcustomersegment= segment['customersegment']
+                description = segment['description']
+                print(description)
+                channels.append(eachcustomersegment)
                 try:
-                    val= ValueProposition.objects.get(
+                    CS_retrival,created = CustomerSegment.objects.update_or_create(
                         project = project,
-                        value = item
+                        customer_segment = eachcustomersegment,
+                        description = description
                     )
-                    try:
-                        CS_retrival = CustomerSegment.objects.get(
-                            project = project,
-                            customer_segment = eachcustomersegment
-                        )
-                    except ObjectDoesNotExist:  
-                        add_customer_segment, created = CustomerSegment.objects.update_or_create(
-                            project = project,
-                            customer_segment = eachcustomersegment,
-                            description = description,
-                        )
-                        add_customer_segment.value_propositions.add(val)
-
+                    if created:
+                        print(f"Items created {eachcustomersegment}")
                 except Exception as e:
-                    print(f"the item doesnt exist {e}")
-                    return JsonResponse("There is a problem with creating Customer segment", 500)
+                    print(f"There is a problem with creating Customer segment {e}")
+                    return JsonResponse("There is a problem with creating Customer segment", status=500)
+                
+                for item in values:
+                    try:
+                        val= ValueProposition.objects.get(
+                            project = project,
+                            value = item
+                        )
+                        if val:
+                            CS_retrival.value_propositions.add(val)
+
+                    except ObjectDoesNotExist:
+                        continue
+                    except Exception as e:
+                        print(f"Other exception than Object doesnt exists in Customer segment value proposition retrival")
+                        return JsonResponse("There is a problem with creating Customer segment", status=500)
+            else:
+                pass
 
         data = set()
         export_CS = CustomerSegment.objects.filter(project=project)
@@ -164,8 +169,9 @@ def customersegment(request):
         return Http404("Access Denied")
 
 
-# The return is not available
-
+########################################
+#    Solve the redundancy in Channel   #
+########################################
 @login_required
 def channels(request):
     if request.method == "POST":
@@ -185,28 +191,44 @@ def channels(request):
         
         for eachchannel in channellist:
             ch = eachchannel['channel']
+            print(ch)
             cs_list = eachchannel['customersegment']
+            print(cs_list)
             description = eachchannel['description']
-            for cs in cs_list:
-                with transaction.atomic():
-                    try:
-                        cs_retrival = CustomerSegment.objects.get(
+            if cs_list:
+                for cs in cs_list:
+                    with transaction.atomic():
+                        try:
+                            cs_retrival = CustomerSegment.objects.get(
+                                project = project,
+                                customer_segment = cs
+                            )
+                            add_channel, created = Channel.objects.update_or_create(
                             project = project,
-                            customer_segment = cs
-                        )
-                        add_channel, created = Channel.objects.update_or_create(
-                        project = project,
-                        channels = ch,
-                        description = description,
-                        )
-                        add_channel.customer_segment.add(cs_retrival)
-                    except ObjectDoesNotExist:
-                        print("customer segment didnt find")
-                        return JsonResponse("Error occured while handeling the Channel", 400)
-                    except Exception as e:
-                        print(f"There is an error with retriving the cs_retrival {e}")
-                        return JsonResponse("There is an error occured while we were processing your request", 400) 
-                    
+                            channels = ch,
+                            description = description,
+                            )
+                            if created:
+                                print("channel created")
+                            add_channel.customer_segment.add(cs_retrival)
+                        except ObjectDoesNotExist:
+                            print("customer segment didnt find")
+                            return JsonResponse("Error occured while handeling the Channel", 400)
+                        except Exception as e:
+                            print(f"There is an error with retriving the cs_retrival {e}")
+                            return JsonResponse("There is an error occured while we were processing your request", 400) 
+            else:
+                print("no list")
+                try:
+                    add_channel, created = Channel.objects.update_or_create(
+                                project = project,
+                                channels = ch,
+                                description = description,
+                                )
+                    if created:
+                        print("channel out of list created")
+                except Exception as e:
+                    return JsonResponse("There is an error occured while we were processing your request", 400) 
         update_query_for_customer_segment= CustomerSegment.objects.filter(
             project=project
         )
@@ -543,14 +565,16 @@ def editcanvas(request):
     if request.method == "POST":
         user = request.user
         webdata = json.loads(request.body)
+        sections = webdata['section']
         pk = webdata['pk']
         model_to_submit = webdata['func']
         new_value = webdata['value']
+
         if 'description' in webdata:
             new_description = webdata['description']
         else:
             new_description = None
-        
+
         if model_to_submit in handler_functions:
             try:
                 item = handler_functions[model_to_submit](pk=pk)
@@ -559,13 +583,23 @@ def editcanvas(request):
                 if (new_description):
                     item.description = new_description
                 item.save()
+
+                for section in sections:
+                    for section_list in section:
+                        getattr(item, section_list).clear()
+                        for value in section[section_list]:
+                            print(section_list)
+                            getattr(item, section_list).add(value)
+
                 return JsonResponse({"message": f"{model_to_submit} updated successfully"}, status=200)
             except ObjectDoesNotExist:
+                print("Object Doesn't Exists")
                 return JsonResponse({"error": "Object Does Not Exist"}, status=404)
             except Exception as e:
                 print(f"error is {e}")
                 return JsonResponse({"error": str(e)}, status=400)
         else:
+            print("model_to_submit not in handler_functions")
             return JsonResponse({"error": f"No handler found for {model_to_submit}"}, status=400)
     else:
         return Http404("Unauthorized Access")
@@ -593,7 +627,6 @@ def removeincanvas(request):
     else:
         return Http404("Access Denied")
 
-
 def addincanvas(request):
     user = request.user
     webdata = json.loads(request.body)
@@ -602,6 +635,7 @@ def addincanvas(request):
     description =""
     projectname = webdata['projectname']
     handler = handler_field_name[webdata['model']]
+
     if value == "":
         return JsonResponse({"message": "The 'value' field cannot be empty"}, status=400)
 
@@ -618,16 +652,16 @@ def addincanvas(request):
             **{handler: value}
         )
         if created:
-            print("New Value Proposition Created")
+            print("New Value Created")
         else:
             print("Value Proposition Found and Updated")
         if 'description' in webdata:
             description = webdata['description']
             instance.description = webdata['description']
             instance.save()
-        
-        if 'value-proposition' in webdata and len(webdata['value-proposition'])>0:
-            model_to_add = webdata['value-proposition']
+            
+        if 'value_propositions' in webdata and len(webdata['value_propositions'])>0:
+            model_to_add = webdata['value_propositions']
             for each in model_to_add:
                 try:
                     foreignItem = ValueProposition.objects.get(value=each,project=project)
@@ -635,31 +669,33 @@ def addincanvas(request):
                 except Exception as e:
                     print(e)
 
-        if 'customer-segment' in webdata and len(webdata['customer-segment'])>0:
-            model_to_add = webdata['customer-segment']
+        if 'customer_segment' in webdata and len(webdata['customer_segment'])>0:
+            model_to_add = webdata['customer_segment']
             for each in model_to_add:
                 try:
                     foreignItem = CustomerSegment.objects.get(customer_segment=each,project=project)
                     getattr(instance, 'customer_segment').add(foreignItem)
+                    print("customer_segment added")
                 except Exception as e:
                     print(f"error in customer-segment {e}")
 
-        if 'customer-relationship' in webdata and len(webdata['customer-relationship']) > 0:
-            model_to_add = webdata['customer-relationship']
-
+        if 'customer_relationship' in webdata and len(webdata['customer_relationship']) > 0:
+            model_to_add = webdata['customer_relationship']
             for each in model_to_add:
                 try:
                     foreignItem = CustomerRelationship.objects.get(relationship=each,project=project)
                     getattr(instance, 'customer_relationship').add(foreignItem)
+                    print("customer_relationship added")
                 except Exception as e:
                     print(e)
 
-        if 'channels' in webdata:
-            model_to_add = webdata['channels']
+        if 'channel' in webdata:
+            model_to_add = webdata['channel']
             for each in model_to_add:
                 try:
                     foreignItem = Channel.objects.get(channels=each,project=project)
                     getattr(instance, 'channel').add(foreignItem)
+                    print("channel added")
                 except Exception as e:
                     print(e)
         data = {'value':value, 'description': description, 'id': instance.id, 'message': f"{webdata['model']} is added successfully"}
@@ -673,20 +709,21 @@ def fetchforcanvas(request):
     if request.user.is_authenticated:
         if request.method == 'POST':
             webdata = json.loads(request.body)
+            print(webdata)
             func = webdata['func']
             projectID = webdata['projectID']
             project = Project.objects.get(id=projectID)
-            if func == 'channel' or func == 'revenue-stream' or func == 'customer-relationship':
-                data = {'customer-segment': [cs.customer_segment for cs in project.customer_segments.all()]}
+            if func == 'channel' or func == 'revenue_stream' or func == 'customer-relationship':
+                data = {'customer_segment': [(cs.customer_segment, cs.id) for cs in project.customer_segments.all()]}
             elif func == 'key-resources' or func == 'key-activities' or func == 'key-partnership' or func == 'cost-structure':
                 data = {
-                    'value-proposition': [vp.value for vp in project.value_propositions.all()],
-                    'customer-segment': [cs.customer_segment for cs in project.customer_segments.all()],
-                    'customer-relationship': [cr.relationship for cr in project.customer_relationship.all()],
-                    'channels': [ch.channels for ch in project.channel.all()]
+                    'value_propositions': [(vp.value, vp.id) for vp in project.value_propositions.all()],
+                    'customer_segment': [(cs.customer_segment ,cs.id ) for cs in project.customer_segments.all()],
+                    'customer_relationship': [(cr.relationship, cr.id) for cr in project.customer_relationship.all()],
+                    'channel': [(ch.channels, ch.id) for ch in project.channel.all()]
                 }
             elif func == 'customer-segment':
-                data = {'value-proposition': [vp.value for vp in project.value_propositions.all()]}
+                data = {'value_propositions': [(vp.value, vp.id) for vp in project.value_propositions.all()]}
             elif func == "value-proposition":
                 data={}
             else:

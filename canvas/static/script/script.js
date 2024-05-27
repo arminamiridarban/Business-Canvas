@@ -702,18 +702,19 @@ function addInput(idOfForm,data){
 
 function editInCanvas(event) {
     let action = event.target;
-    console.log(action)
+    console.log(action);
     console.log("in the editInCanvas function");
+    let project_id = document.querySelector('#projectname').dataset['id'];
     let number = action.value;
     let div = action.closest('[data-id]');
-    let elements = div.querySelectorAll('input, textarea');
+    let elements = div.querySelectorAll('input, textarea, select');
+    let csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
     if (action.classList.contains("fa-pen") ){
         let temptextarea = div.querySelector('textarea');
+        let data = {func: action.dataset['type'],projectID: project_id,}
         if (temptextarea.style.display === "none"){
             temptextarea.style.display = "block";
         }
-        /* Change the name of the button and make them editable */
-
         action.classList.remove('fa-pen');
         action.classList.add('fa-check');
         elements.forEach(item => {
@@ -725,6 +726,41 @@ function editInCanvas(event) {
             }
 
         });
+        fetch('/fetchforcanvas', {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken,
+            },
+            body: JSON.stringify(data),
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            let temp_select = document.createElement('select');
+            temp_select.setAttribute('data-type', 'select');            
+            temp_select['multiple'] = true;
+            temp_select.classList.add('editCanvasSelect');
+            if (Object.keys(data).length !== 0){
+                for (item in data){
+                    let temp_groupdata = document.createElement('optgroup');
+                    temp_groupdata.label = item.replace("_"," ").toUpperCase();
+                    temp_select.append(temp_groupdata);
+                    for (value in data[item]){
+                        console.log("here");
+                        let group_value = document.createElement('option');
+                        group_value.value = data[item][value][1];
+                        group_value.textContent = data[item][value][0];
+                        temp_groupdata.append(group_value);                        
+                    }
+                    temp_select.append(temp_groupdata);
+                }
+                div.append(temp_select);
+            }
+        })
+        .catch(error => {
+            console.log(error);
+        });
         
     } else {
         let data = {};
@@ -732,12 +768,22 @@ function editInCanvas(event) {
             let dataset = item.dataset.type;
             switch (dataset) {
                 case "value":
-                    console.log(item);
                     data.value = item.value;
                     break;
                 case "description":
-                    console.log(item);
                     data.description = item.value;
+                    break;
+                case "select":
+                    let selectedOptions = [];
+                    item.querySelectorAll('optgroup').forEach(optgroup => {
+                        let item_list = [];
+                        optgroup.querySelectorAll('option:checked').forEach(option =>{
+                            item_list.push(option.value);
+                        });
+                        let dummy = optgroup.label.replace(" ","_").toLowerCase();
+                        selectedOptions.push({[dummy]:item_list});
+                    });
+                    data.section = selectedOptions;
                     break;
             }
         });
@@ -761,9 +807,14 @@ function editInCanvas(event) {
                 expandDiscription(event);
             }
             elements.forEach(element =>{
+                if (element.tagName === "SELECT"){
+                    console.log(element);
+                    element.remove();
+                }
                 element.setAttribute('readonly','true');
                 element.style.backgroundColor = "transparent";
             });
+
             showNotification(data.message);
         })
         .catch(error => {
@@ -849,8 +900,8 @@ function addInCanvas(event){
                 tempoptgroup.label = key;
                 values.forEach(value => {
                     let tempOption = document.createElement('option');
-                    tempOption['value'] = value;
-                    tempOption.textContent = value;
+                    tempOption['value'] = value[0];
+                    tempOption.textContent = value[0];
                     tempoptgroup.appendChild(tempOption);
                 });
                 tempSelect.appendChild(tempoptgroup);
