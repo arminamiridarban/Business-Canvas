@@ -19,32 +19,37 @@
             <div class="bar2"></div>
             <div class="bar3"></div>
         </nav>
-        <nav>
+        <nav class="burgerheader">
             <ul class="burgerlist">
                 <li>
                     <a href="{% url 'home' %}">Home</a>
                 </li>
                 <li>
-                    <a href="{%url 'comparecanvas'%}">Compare Canvas</a>
+                    <a href="{% url 'tutorial'%}">Tutorial</a>
+                </li>
+                <li>
+                    <a href="#">Sample Canvas</a>
                 </li>
                 {%if user.is_authenticated%}
                 <li>
                     <a href="{% url 'canvas' %}">Create your Bussiness Model</a>
                 </li>
+                {% endif %}
+                <li>
+                    <a href="{%url 'comparecanvas'%}">Compare Canvas</a>
+                </li>
+                {%if user.is_authenticated%}
                 <li>
                     <a href="{% url 'buildcanvas'%}">Your Canvas</a>
                 </li>
                 <li>
                     <a href="{% url 'logout'%}">Logout</a>
                 </li>
-                {% else %}
+                {% else%}
                 <li>
                     <a href="{% url 'login'%}">Register/Login</a>
                 </li>
                 {%endif%}
-                <li>
-                    <a href="{% url 'tutorial'%}">Tutorial</a>
-                </li>
             </ul>
         </nav>
         <nav class="layoutheader">
@@ -58,20 +63,24 @@
                     <a href="{% url 'tutorial'%}">Tutorial</a>
                 </li>
                 <li>
-                    <a href="{%url 'comparecanvas'%}">Compare Canvas</a>
+                    <a href="#">Sample Canvas</a>
                 </li>
                 {%if user.is_authenticated%}
                 <li>
                     <a href="{% url 'canvas' %}">Create your Bussiness Model</a>
                 </li>
+                {% endif %}
+                <li>
+                    <a href="{%url 'comparecanvas'%}">Compare Canvas</a>
+                </li>
+                {%if user.is_authenticated%}
                 <li>
                     <a href="{% url 'buildcanvas'%}">Your Canvas</a>
                 </li>
                 <li>
                     <a href="{% url 'logout'%}">Logout</a>
                 </li>
-                {% else %}
-                
+                {% else%}
                 <li>
                     <a href="{% url 'login'%}">Register/Login</a>
                 </li>

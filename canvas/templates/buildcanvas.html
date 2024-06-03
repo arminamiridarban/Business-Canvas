@@ -29,11 +29,15 @@
         <input type="hidden" value="{{project.name}}" id="projectname" data-id="{{project.id}}">
     </div>
     <div class="key-partner" id="key-partner-main-div">
-        <div class="buildCanvasAdd">
-            <h4>Key Partnership</h4>
-            <button type="button" value="key-partnership" id="key-partnership-add-button" class="buildCanvasAddButton fa-solid fa-plus"></button>
+        <div class="buildCanvasAdd" style="flex-direction: column;">
+            <div class="triangle">
+                <i class="fa-solid fa-handshake center-triangle-item" style="font-size: xx-large; " ></i>
+            </div>
+            <div style="justify-content: center; display: flex;">
+                <h4>Key Partnership</h4>
+                <button type="button" value="key-partnership" id="key-partnership-add-button" class="buildCanvasAddButton fa-solid fa-plus"></button>
+            </div>
         </div>
-        
         {% if key_partnerships %}
         {% for kp in key_partnerships%}
         <div data-id="{{ kp.2 }}">
@@ -56,7 +60,10 @@
         {%endif%}
     </div>
     <div class="key-activities" id="key-activities-main-div">
-        <div class="buildCanvasAdd">
+        <div class="triangle">
+            <i class="fa-solid fa-pen-to-square center-triangle-item" style="font-size: xx-large; " ></i>
+        </div>
+        <div class="buildCanvasAdd" style="display: flex; justify-content: center;">
             <h4>Key Activities</h4>
             <button type="button" value="key-activities" id="key-activities-add-button" class=" fa-solid fa-plus buildCanvasAddButton"></button>
         </div>
@@ -82,7 +89,10 @@
         {%endif%}
     </div>
     <div class="value-proposition" id="value-proposition-main-div">
-        <div class="buildCanvasAdd">
+        <div class="triangle">
+            <i class="fa-solid fa-gift center-triangle-item" style="font-size: xx-large; " ></i>
+        </div>
+        <div class="buildCanvasAdd" style="display: flex; justify-content: center;">
             <h4>Value Propositions</h4>
             <button type="button" value="value-proposition" id="value-proposition-add-button" class="buildCanvasAddButton fa-solid fa-plus"></button>
         </div>
@@ -109,7 +119,10 @@
     </div>
     
     <div class="customer-relationships" id="customer-relationship-main-div">
-        <div class="buildCanvasAdd">
+        <div class="triangle">
+            <i class="fa-solid fa-comments center-triangle-item" style="font-size: xx-large; " ></i>
+        </div>
+        <div class="buildCanvasAdd" style="display: flex; justify-content: center;">
             <h4>Customer Relationships</h4>
             <button type="button" value="customer-relationship" id="customer-relationship-add-button" class="buildCanvasAddButton fa-solid fa-plus"></button>
         </div>
@@ -137,7 +150,10 @@
         </div>
     </div>
     <div class="customer-segment" id="customer-segment-main-div">
-        <div class="buildCanvasAdd">
+        <div class="triangle">
+            <i class="fa-solid fa-user-group center-triangle-item" style="font-size: xx-large; " ></i>
+        </div>
+        <div class="buildCanvasAdd" style="display: flex; justify-content: center;">
             <h4>Customer Segments</h4>
             <button type="button" value="customer-segment" id="customer-segment-add-button" class="buildCanvasAddButton fa-solid fa-plus"></button>
         </div>
@@ -165,7 +181,10 @@
         </div>
     </div>
     <div class="key-resources" id="key-resources-main-div">
-        <div class="buildCanvasAdd">
+        <div class="triangle">
+            <i class="fa-solid fa-toolbox center-triangle-item" style="font-size: xx-large; " ></i>
+        </div>
+        <div class="buildCanvasAdd" style="display: flex; justify-content: center;">
             <h4>Key Resources</h4>
             <button type="button" value="key-resources" id="key-resources-add-button" class="buildCanvasAddButton fa-solid fa-plus"></button>
         </div>
@@ -193,7 +212,10 @@
         </div>
     </div>
     <div class="channel" id="channel-main-div">
-        <div class="buildCanvasAdd">
+        <div class="triangle">
+            <i class="fa-solid fa-code-fork center-triangle-item" style="font-size: xx-large; " ></i>
+        </div>
+        <div class="buildCanvasAdd" style="display: flex; justify-content: center;">
             <h4>Channels</h4>
             <button type="button" value="channel" id="channel-add-button" class="buildCanvasAddButton fa-solid fa-plus"></button>
         </div>
@@ -221,7 +243,10 @@
         </div>
     </div>
     <div class="cost-structure" id="cost-structure-main-div">
-        <div class="buildCanvasAdd">
+        <div class="triangle">
+            <i class="fa-solid fa-file-invoice-dollar center-triangle-item" style="font-size: xx-large; " ></i>
+        </div>
+        <div class="buildCanvasAdd" style="display: flex; justify-content: center;">
             <h4>Cost Structure</h4>
             <button type="button" value="cost-structure" id="cost-structure-add-button" class="buildCanvasAddButton fa-solid fa-plus"></button>
         </div>
@@ -249,7 +274,10 @@
         </div>
     </div>
     <div class="revenue-stream" id="revenue-stream-main-div">
-        <div class="buildCanvasAdd">
+        <div class="triangle">
+            <i class="fa-solid fa-sack-dollar center-triangle-item" style="font-size: xx-large; " ></i>
+        </div>
+        <div class="buildCanvasAdd" style="display: flex; justify-content: center;">
             <h4>Revenue Stream</h4>
             <button type="button" value="revenue-stream" id="revenue-stream-add-button" class="buildCanvasAddButton fa-solid fa-plus"></button>
         </div>

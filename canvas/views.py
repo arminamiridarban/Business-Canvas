@@ -351,7 +351,11 @@ def revenuestream(request):
         return JsonResponse(export_data, status=200)
     else:
         return Http404("Access Denied")
-
+    
+    
+###################################
+# fix key section for empty items #
+###################################
 
 @login_required
 def keysection(request):

@@ -266,7 +266,6 @@ footer p{
     grid-template-columns: 19.5% 19.5% 10.25% 10.25% 19.5% 19.5%;
     grid-template-rows: auto;
     grid-template-areas:
-    'header header header header header header',
   'key-partner key-activities value-proposition value-proposition customer-relationship customer-segment'
   'key-partner key-resources value-proposition value-proposition channels customer-segment'
   'cost-structure cost-structure cost-structure revenue-stream revenue-stream revenue-stream';
@@ -296,7 +295,6 @@ footer p{
     display: block;
     opacity: 1;
 }
-
 
 .grid-container {
     height: auto;
@@ -631,7 +629,9 @@ transform: translateX(26px);
 .change .bar3 {
     transform: translate(0, -11px) rotate(45deg);
 }
-
+.burgerheader{
+    display: none;
+}
 .burgerlist {
     display: flex;
     flex-direction: column;
@@ -639,8 +639,8 @@ transform: translateX(26px);
     color: white;
     text-decoration: none;
     height: 0; /* Start with height 0 */
-    overflow: hidden; /* Hide overflowing content */
-    transition: height 0.5s; /* Smooth transition for height */
+    overflow: hidden;
+    transition: height 1.5s; 
 }
 
 .burgerlist li {
@@ -653,7 +653,7 @@ transform: translateX(26px);
 }
 
 .burgerlistopen {
-    height: 140px; /* Adjust the height to show all menu items */
+    height: auto; /* Adjust the height to show all menu items */
 }
 
 .tutorial{
@@ -796,10 +796,32 @@ transform: translateX(26px);
 .comparecanvas-grid-container > div{
     margin: 10px 0;
 }
+.triangle{
+    width: 0;
+    height: 0;
+    border-left: 100px solid transparent;
+    border-right: 100px solid transparent;
+    border-top: 100px solid rgb(17, 60, 10); 
+    justify-content: center; 
+    display: flex; 
+    margin: auto;
+    transition: border-top 0.5s ease; 
+}
+.triangle:hover {
+    border-top: 100px solid rgb(168, 226, 159);
+}
+
+.center-triangle-item{
+    font-size: xx-large;
+    transform: translateY(-75px);
+}
+.grid-container-tutorial:hover{
+    cursor: pointer;
+}
 
 /* Responsive */
 
-@media only screen and (max-width: 750px) {
+@media only screen and (max-width: 950px) {
     .valueProposition, .tempInputDiv {
         display: grid;
         grid-gap: 5px;
@@ -809,6 +831,9 @@ transform: translateX(26px);
     .burger{
         display: inline-block;
         flex-direction: column;
+    }
+    .burgerheader{
+        display: block;
     }
     .layoutheader{
         display: none;
