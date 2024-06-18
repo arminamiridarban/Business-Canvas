@@ -1,7 +1,89 @@
 document.addEventListener("DOMContentLoaded", () => {
-    if (window.location.pathname === "/") {
+    if (window.location.pathname != "/"){
+
+        // GPT modal
+        var modal = document.getElementById("modal");
+        var btn = document.getElementById("chatgpt_logo");
+        var span = document.getElementsByClassName("close")[0];
+    
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+            
+        span.onclick = function() {
+        modal.style.display = "none";
+        }
+        
+        window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }}
+        if (window.location.pathname === "/") {
+    }
+
+
     } else if (window.location.pathname.startsWith("/login") ){
         
+    }
+    else if (window.location.pathname.startsWith("/samplecanvas")){
+        
+        let select = document.querySelector('#samplecanvas');
+        select.addEventListener('change', () => {
+            let csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
+            fetch('/samplecanvas',{
+                method: 'POST',
+                headers:{
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken,
+                },
+                body: JSON.stringify({
+                    project_id: select.value,
+                })
+            })
+            .then(response => response.json())
+            .then(data =>{
+                let canvas_info = data.data;
+                values = {
+                    "value_propositions":"value",
+                    "customer_segments":"customer_segment",
+                    "channels":"channels",
+                    "revenue_streams":"revenue",
+                    "key_partners":"key_partner",
+                    "key_resources":"key_resource",
+                    "key_activities":"key_activity",
+                    "customer_relationships":"relationship",
+                    "cost_structures":"cost"
+                }
+                document.querySelectorAll('.XX').forEach((div) => {
+                    div.remove();
+                });                
+                for (item in canvas_info){
+                    let element = document.querySelector(`#${item}`);
+                    if (item in values){
+                        console.log(canvas_info[item]);
+                        for (each in canvas_info[item]){
+                            let tempDiv = document.createElement('div');
+                            tempDiv.classList.add('XX');
+                            let tempInput = document.createElement('input');
+                            tempInput.type = "text";
+                            tempInput.setAttribute('readonly','true');
+                            tempInput.value = canvas_info[item][each][`${values[item]}`];
+                            let temptextarea = document.createElement('textarea');
+                            temptextarea.textContent = canvas_info[item][each]['description'];
+                            temptextarea.setAttribute('readonly','true');
+                            tempDiv.append(tempInput);
+                            tempDiv.append(temptextarea);
+                            element.append(tempDiv);
+                        }
+
+                    } 
+                }
+                
+            })
+            .catch(error =>{
+                console.log(error);
+            })
+        });
     }
     else if (window.location.pathname.startsWith("/comparecanvas")){
 

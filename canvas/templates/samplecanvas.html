@@ -1,0 +1,230 @@
+{% extends 'layout.html' %}
+{% load static %}
+{%block title%} Tutorial {%endblock%}
+{% block body%}
+<style>
+    .grid-container-tutorial p:hover{
+        color: black;
+        font-weight: bold;
+        background-color: white;
+        border-radius: 5px;
+        transition: 0.15s ease;
+    }
+</style>
+<div class="tutorial">
+    <div class="tutorial-header">
+        <h3>EcoBags</h3>
+        <p>Below you can see EcoBags Business Canvas Model.</p>
+
+    </div>
+    <div>
+        <ul class="grid-container-tutorial">
+            <li class="value-proposition">
+                <div class="triangle">
+                    <i class="fa-solid fa-gift center-triangle-item" style="font-size: xx-large;"></i>
+                </div>
+                <div>
+                    <h3 style="text-align: center;"><strong>Value Propositions</strong></h3>
+                    <p>Durable, eco-friendly reusable bags</p>
+                    <p>Customizable designs for personal or corporate branding</p>
+                    <p>Affordable pricing compared to competitors</p>
+                    <p>Contribution to reducing plastic waste</p>
+                    <span >
+                        &#10003;&nbsp; Related to Customer Segments: Environmentally conscious consumers, Retail stores and supermarkets, Corporate clients for promotional items, Online shoppers<br>
+                        &#10003;&nbsp; Related to Channels: Online store, E-commerce platforms, Retail stores and supermarkets, Corporate sales team<br>
+                        &#10003;&nbsp; Related to Revenue Streams: Direct sales, Wholesale orders, Customized orders, Subscription service<br>
+                        &#10003;&nbsp; Related to Key Resources: Manufacturing facility, Design team, Website, Marketing team<br>
+                        &#10003;&nbsp; Related to Key Activities: Product design and manufacturing, Marketing and promotion, Order fulfillment and shipping, Customer service<br>
+                        &#10003;&nbsp; Related to Key Partnerships: Suppliers of eco-friendly materials, Retail partners, E-commerce platforms, Environmental organizations<br>
+                        &#10003;&nbsp; Related to Cost Structure: Manufacturing and material costs, Marketing and advertising expenses, Salaries for employees, Shipping and logistics costs</span>
+                </div>
+            </li>
+            <li class="customer-segment">
+                <div class="triangle">
+                    <i class="fa-solid fa-user-group center-triangle-item" style="font-size: xx-large;"></i>
+                </div>
+                <div>
+                    <h3 style="text-align: center;"><strong>Customer Segments</strong></h3>
+                    <p>Environmentally conscious consumers</p>
+                    <p>Retail stores and supermarkets</p>
+                    <p>Corporate clients for promotional items</p>
+                    <p>Online shoppers</p>
+                    <span>
+                        &#10003;&nbsp; Environmentally conscious consumers are related to Value Propositions: Durable, eco-friendly reusable bags, Contribution to reducing plastic waste.
+                        <br>&#10003;&nbsp; Retail stores and supermarkets are related to Value Propositions: Affordable pricing compared to competitors, Contribution to reducing plastic waste
+                        <br>&#10003;&nbsp; Corporate clients for promotional items are related to Value Propositions: Customizable designs for personal or corporate branding
+                        <br>&#10003;&nbsp; Online shoppers are related to Value Propositions: Affordable pricing compared to competitors, Contribution to reducing plastic waste.
+                        <br>&#10003;&nbsp; All customer segments are related to Channels: Online store, E-commerce platforms, Retail stores and supermarkets, Corporate sales team.
+                        <br>&#10003;&nbsp; All customer segments are related to Customer Relationships: Social media engagement, Email newsletters, Customer support, Loyalty programs.
+                        <br>&#10003;&nbsp; All customer segments are related to Revenue Streams: Direct sales, Wholesale orders, Customized orders, Subscription service</span>
+                </div>
+            </li>            
+            <li class="channel">
+                <div class="triangle">
+                    <div class="content-modified">
+                        <div class="network"></div>
+                        <div class="main-line line1"></div>
+                        <div class="main-line line2"></div>
+                        <div class="main-line line3"></div>
+                        <div class="main-line line4"></div>
+                        <div class="main-line line5"></div>
+                        <div class="main-line line6"></div>
+                        <div class="network main-line-circle line-circle1"></div>
+                        <div class="network main-line-circle line-circle2"></div>
+                        <div class="network main-line-circle line-circle3"></div>
+                        <div class="network main-line-circle line-circle4"></div>
+                        <div class="network main-line-circle line-circle5"></div>
+                        <div class="network main-line-circle line-circle6"></div>
+                    </div>
+                </div>                
+                <div>
+                    <h3 style="text-align: center;"><strong>Channels</strong></h3>
+                    <p>Online store (company website)</p>
+                    <p>E-commerce platforms (Amazon, Etsy)</p>
+                    <p>Retail stores and supermarkets</p>
+                    <p>Corporate sales team for B2B clients</p>
+                    <span>
+                        &#10003;&nbsp; Channels are related to Customer Segments: Environmentally conscious consumers, Retail stores and supermarkets, Corporate clients for promotional items, Online shoppers.
+                        <br>&#10003;&nbsp; Channels are related to Value Propositions: Durable, eco-friendly reusable bags, Customizable designs for personal or corporate branding, Affordable pricing compared to competitors, Contribution to reducing plastic waste.
+                        <br>&#10003;&nbsp; Channels are related to Revenue Streams: Direct sales, Wholesale orders, Customized orders, Subscription service.
+                        <br>&#10003;&nbsp; Channels are related to Key Resources: Manufacturing facility, Design team, Website, Marketing team
+                        <br>&#10003;&nbsp; Channels are related to Key Activities: Product design and manufacturing, Marketing and promotion, Order fulfillment and shipping, Customer service</span>
+                </div>
+            </li>
+            <li class="customer-relationship">
+                <div class="triangle">
+                    <i class="fa-solid fa-comments center-triangle-item" style="font-size: xx-large;"></i>
+                </div>
+                <div>
+                    <h3 style="text-align: center;"><strong>Customer Relationships</strong></h3>
+                    <p>Social media engagement</p>
+                    <p>Email newsletters with eco-friendly tips and product updates</p>
+                    <p>Customer support via chat, email, and phone</p>
+                    <p>Loyalty programs and discounts for repeat customers</p>
+                    <tspan>
+                        &#10003;&nbsp; Customer Relationships are related to Customer Segments: Environmentally conscious consumers, Retail stores and supermarkets, Corporate clients for promotional items, Online shoppers.
+                        <br>&#10003;&nbsp; Customer Relationships are related to Channels: Online store, E-commerce platforms, Retail stores and supermarkets, Corporate sales team.
+                        <br>&#10003;&nbsp; Customer Relationships are related to Value Propositions: Durable, eco-friendly reusable bags, Customizable designs for personal or corporate branding, Affordable pricing compared to competitors, Contribution to reducing plastic waste</span>
+                </div>
+            </li>
+            <li class="revenue-stream">
+                <div class="triangle">
+                    <i class="fa-solid fa-sack-dollar center-triangle-item" style="font-size: xx-large;"></i>
+                </div>
+                <div>
+                    <h3 style="text-align: center;"><strong>Revenue Streams</strong></h3>
+                    <p>Direct sales through online store</p>
+                    <p>Wholesale orders from retail stores and supermarkets</p>
+                    <p>Customized orders for corporate clients</p>
+                    <p>Subscription service for new designs and limited editions</p>
+                    <span>
+                        &#10003;&nbsp; Revenue Streams are related to Customer Segments: Environmentally conscious consumers, Retail stores and supermarkets, Corporate clients for promotional items, Online shoppers.
+                        <br>&#10003;&nbsp;Revenue Streams are related to Value Propositions: Durable, eco-friendly reusable bags, Customizable designs for personal or corporate branding, Affordable pricing compared to competitors, Contribution to reducing plastic waste.
+                        <br>&#10003;&nbsp;Revenue Streams are related to Channels: Online store, E-commerce platforms, Retail stores and supermarkets, Corporate sales team</span>
+                </div>
+            </li>
+            <li class="key-resources">
+                <div class="triangle">
+                    <i class="fa-solid fa-toolbox center-triangle-item" style="font-size: xx-large;"></i>
+                </div>
+                <div>
+                    <h3 style="text-align: center;"><strong>Key Resources</strong></h3>
+                    <p>Manufacturing facility and equipment</p>
+                    <p>Design team for product customization</p>
+                    <p>Website and e-commerce infrastructure</p>
+                    <p>Marketing and sales team</p>
+                    <span>
+                        &#10003;&nbsp; Key Resources are related to Value Propositions: Durable, eco-friendly reusable bags, Customizable designs for personal or corporate branding, Affordable pricing compared to competitors, Contribution to reducing plastic waste.
+                        <br>&#10003;&nbsp; Key Resources are related to Channels: Online store, E-commerce platforms, Retail stores and supermarkets, Corporate sales team.
+                        <br>&#10003;&nbsp; Key Resources are related to Key Activities: Product design and manufacturing, Marketing and promotion, Order fulfillment and shipping, Customer service</span>
+                </div>
+            </li>
+            <li class="key-activities">
+                <div class="triangle">
+                    <i class="fa-solid fa-pen-to-square center-triangle-item" style="font-size: xx-large;"></i>
+                </div>
+                <div>
+                    <h3 style="text-align: center;"><strong>Key Activities</strong></h3>
+                    <p>Product design and manufacturing</p>
+                    <p>Marketing and promotion</p>
+                    <p>Order fulfillment and shipping</p>
+                    <p>Customer service and support</p>
+                    <span>
+                        &#10003;&nbsp; Key Activities are related to Value Propositions: Durable, eco-friendly reusable bags, Customizable designs for personal or corporate branding, Affordable pricing compared to competitors, Contribution to reducing plastic waste.
+                        <br>&#10003;&nbsp; Key Activities are related to Channels: Online store, E-commerce platforms, Retail stores and supermarkets, Corporate sales team.
+                        <br>&#10003;&nbsp; Key Activities are related to Key Resources: Manufacturing facility, Design team, Website, Marketing team.</span>
+                </div>
+            </li>
+            <li class="key-partner">
+                <div class="triangle">
+                    <i class="fa-solid fa-handshake center-triangle-item" style="font-size: xx-large;"></i>
+                </div>
+                <div>
+                    <h3 style="text-align: center;"><strong>Key Partnerships</strong></h3>
+                    <p>Suppliers of eco-friendly materials</p>
+                    <p>Retail partners for distribution</p>
+                    <p>E-commerce platforms for online sales</p>
+                    <p>Environmental organizations for joint campaigns</p>
+                    <span>
+                        &#10003;&nbsp; Key Partnerships are related to Value Propositions: Durable, eco-friendly reusable bags, Customizable designs for personal or corporate branding, Affordable pricing compared to competitors, Contribution to reducing plastic waste.
+                        <br> &#10003;&nbsp; Key Partnerships are related to Channels: Online store, E-commerce platforms, Retail stores and supermarkets, Corporate sales team.
+                        <br> &#10003;&nbsp; Key Partnerships are related to Key Resources: Manufacturing facility, Design team, Website, Marketing team</span>
+                </div>
+            </li>
+            <li class="cost-structure">
+                <div class="triangle">
+                    <i class="fa-solid fa-file-invoice-dollar center-triangle-item" style="font-size: xx-large;"></i>
+                </div>
+                <div>
+                    <h3 style="text-align: center;"><strong>Cost Structure</strong></h3>
+                    <p>Manufacturing and material costs</p>
+                    <p>Marketing and advertising expenses</p>
+                    <p>Salaries for employees</p>
+                    <p>Shipping and logistics costs</p>
+                    <span>
+                        &#10003;&nbsp; Cost Structure is related to Value Propositions: Durable, eco-friendly reusable bags, Customizable designs for personal or corporate branding, Affordable pricing compared to competitors, Contribution to reducing plastic waste.
+                        <br>&#10003;&nbsp; Cost Structure is related to Key Resources: Manufacturing facility, Design team, Website, Marketing team.
+                        <br>&#10003;&nbsp; Cost Structure is related to Key Activities: Product design and manufacturing, Marketing and promotion, Order fulfillment and shipping, Customer service</span>
+                </div>
+            </li>
+        </ul>
+        
+    </div>  
+</div>
+<div class="chatgpt-div" id="chatgpt_logo">
+    <img src="{% static 'picture/chatgpt.jpg' %}" alt=" Logo" class="chatgpt">
+    <p style="color: black;" id="ask_ai">Ask AI</p>
+</div>
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span><br>
+        <h3 style="text-align: center;">How to use ChatGPT for your model</h3><br>
+        <p>
+            To use ChatGPT better, you have to define what do you need.it's crucial to provide specific details and context about your inquiry. For instance, instead of asking a broad question like "How do I improve my business canvas?" you could ask, "In the 'Customer Segments' section of my business canvas, how can I identify niche market segments for my online pet grooming service targeting urban millennials?" <br>
+            By being specific about the section of the canvas you're focusing on and the target market you're addressing, you help me understand the scope of your question and provide a more relevant response. Additionally, including examples or scenarios, such as mentioning specific challenges you're facing or goals you're trying to achieve, can further clarify your question and facilitate a more effective exchange of information.
+        </p>
+        <a href="https://chatgpt.com/" class="chatgpt-button">Go to ChatGPT</a>
+    </div>
+</div>
+
+<script>
+    document.querySelectorAll("li").forEach(li => {
+        li.addEventListener('click', () => {
+            let x = li.querySelector(".description");
+            x.classList.toggle("show-description");
+        });
+    });
+    let textareas = document.querySelectorAll('textarea');
+        textareas.forEach(textarea => {
+            textarea.style.height = "auto";
+            textarea.style.height = textarea.scrollHeight + "px";
+            textarea.style.width = '100%';
+            textarea.readOnly = true;
+            textarea.disabled = true;
+            textarea.style.background = "transparent";
+            textarea.style.color = "white";
+            textarea.style.border = 'none';
+        });
+</script>
+
+{%endblock%}

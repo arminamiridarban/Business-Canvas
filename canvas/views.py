@@ -877,3 +877,33 @@ def comparecanvas(request):
         except ObjectDoesNotExist:
             return JsonResponse({'message':"Items doesn't exists"}, status=500)
             
+
+
+def samplecanvas(request):
+    if request.method == "GET":
+        canvas = Project.objects.all()
+        return render(request, "samplecanvas.html",{
+            'canvas' : canvas,
+        })
+    elif request.method == "POST":
+        webdata = json.loads(request.body)
+        project_id = webdata['project_id']
+        try:
+            project = Project.objects.get(id=project_id)
+            all = project.get_all_relationships()
+            data = {
+                'project': project.name,
+                'value_propositions': list(all['value_propositions'].values('value','description')),
+                'customer_segments': list(all['customer_segments'].values('customer_segment','description')),
+                'channels': list(all['channels'].values('channels','description')),
+                'customer_relationships': list(all['customer_relationships'].values('relationship','description')),
+                'revenue_streams': list(all['revenue_streams'].values('revenue','description')),
+                'key_resources': list(all['key_resources'].values('key_resource','description')),
+                'key_activities': list(all['key_activities'].values('key_activity','description')),
+                'key_partners': list(all['key_partners'].values('key_partner','description')),
+                'cost_structures': list(all['cost_structures'].values('cost','description'))
+            }
+            print(data)
+            return JsonResponse({"data":data}, safe=False, status=200)
+        except ObjectDoesNotExist:
+            return JsonResponse({'message':"Items doesn't exists"}, status=500)

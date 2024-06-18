@@ -1,3 +1,117 @@
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1; 
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.8); 
+  }
+  .chatgpt-button{
+    width: 150px;
+    height: auto;
+    background-color: rgba(25, 100, 221, 0.921) ;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    margin: auto;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  .chatgpt-button:hover {
+    text-decoration: none;
+    color: white;
+  }
+  
+  .modal-content {
+    background-color: black;
+    margin: 15% auto; 
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+  }
+  
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+.content-modified{
+
+}
+.network {
+    width: 15px;
+    height: 15px;
+    border: 2px white solid;
+    border-radius: 50%;
+    transform: translateY(-70px);
+
+}
+.main-line{
+    border: white solid 1px;
+    height: 1px;
+    position: relative;
+}
+.line1{
+    rotate: 90deg;
+    transform: translateX(-93px);
+}
+.line2{
+    rotate: 90deg;
+    transform: translatex(-66px);
+}
+.line3{
+    rotate: 30deg;
+    transform: translate(-27px, -70px);
+}
+.line4{
+    rotate: -30deg;
+    transform: translate(27px, -72px);
+}
+.line5{
+    rotate: 30deg;
+    transform: translate(-58px, -73px);
+}
+.line6{
+    rotate: -30deg;
+    transform: translate(59px, -76px);
+}
+
+.main-line-circle{
+    height: 8px;
+    width: 8px;
+    transform: translate(0px,0px);
+    border: white solid 2px;
+}
+.line-circle1{
+    transform: translate(3px, -68px);
+}
+.line-circle2{
+    transform: translate(25px, -87px);
+}
+.line-circle3{
+    transform: translate(-19px, -95px);
+}
+.line-circle4{
+    transform: translate(3px, -143px);
+}
+.line-circle5{
+    transform: translate(26px, -138px);
+}
+.line-circle6{
+    transform: translate(-19px, -145px);
+}
+
 .notification {
     position: fixed;
     text-align: center;
@@ -363,24 +477,29 @@ footer p{
     background-color: transparent;
     border-radius: 5px;
     font-size: clamp(10px,1vw,12px);
+    box-sizing: border-box;
 }
 
 .canvaseditbuttondiv button[data-mode="edit"]:hover {
     background-color: white;
-    scale: 1.2;
     font-weight: bold;
-    border: #b961ff 1px solid;
+    scale: 1.2;
     color: blue;
-
 }
 
 .canvaseditbuttondiv button[data-mode="remove"]:hover {
     background-color: white;
-    border: #b961ff 1px solid;
-    scale: 1.2;
     font-weight: bold;
+    scale: 1.2;
     color: red;
 }
+.canvaseditbuttondiv button[data-mode="view"]:hover {
+    background-color: white;
+    font-weight: bold;
+    scale: 1.2;
+    color: rgb(151, 151, 17);
+}
+
 .buildCanvasInput, .buildCanvasTextarea {
     resize: none;
     color: inherit;
@@ -660,7 +779,8 @@ transform: translateX(26px);
     display: flex;
     padding: 0 5%;
     flex-direction: column;
-    background-color:rgb(94, 42, 161); ;
+    background-color:rgb(94, 42, 161);
+    color: white;
 }
 .tutorial-header{
     text-align: center;
@@ -801,16 +921,27 @@ transform: translateX(26px);
     height: 0;
     border-left: 100px solid transparent;
     border-right: 100px solid transparent;
-    border-top: 100px solid rgb(17, 60, 10); 
+    border-top: 100px solid #188886;
     justify-content: center; 
     display: flex; 
     margin: auto;
+    color: white !important;
     transition: border-top 0.5s ease; 
 }
-.triangle:hover {
-    border-top: 100px solid rgb(168, 226, 159);
+.triangle:hover{
+    border-top: 100px solid #fab551;
 }
 
+.triangle:hover .center-triangle-item{
+    border-color: black;
+    color: black !important;
+}
+.triangle:hover .network{
+    border-color: black;
+}
+.triangle:hover .main-line{
+    border-color: black;
+}
 .center-triangle-item{
     font-size: xx-large;
     transform: translateY(-75px);

@@ -1,4 +1,5 @@
 {% extends 'layout.html' %}
+{% load static %}
 {%block title%} Tutorial {%endblock%}
 {% block body%}
 <div class="tutorial">
@@ -11,137 +12,148 @@
     </div>
     <div>
         <ul class="grid-container-tutorial">
-            <li class="value-proposition">
-                <div class="triangle">
-                    <i class="fa-solid fa-gift center-triangle-item" style="font-size: xx-large; " ></i>
-                </div>
-                <div>
-                    <h3 style="text-align: center;"><strong>Value Propositions</strong></h3>
-                    <p>Describing the products or services offered by the business and how they fulfill the needs or solve the problems of the target customers.<br><br></p>
-                    <p class="description">
-                        It's best to begin with the Value Proposition section. Start by asking yourself, <strong>"What does my product offer that makes it more valuable than others?"</strong><br>
-                        For instance, if you're developing a cellular phone, consider what features or qualities set your product apart and compel users to choose it over others. The answer of the question, is what you need to put in the <strong>Value Proposition</strong> section. 
-                    </p>
-                </div>
-            </li>
-            <li class="customer-segment">
-                <div class="triangle">
-                    <i class="fa-solid fa-user-group center-triangle-item" style="font-size: xx-large; " ></i>
-                </div>
-                <div>
-                    <h3 style="text-align: center;"><strong>Customer Segments</strong></h3>
-                    <p>This section involves identifying the different groups of people or organizations that a company aims to serve. <br><br></p>
-                    <p class="description">
-                        To fill out this section, consider each <strong>Value Proposition</strong> and answer the question, <strong>"Who is the buyer of my product, considering the intended Value Proposition?"</strong><br>
-                        For example, if the Value Proposition revolves around producing luxury mobile phones, your target customer segment might be Flaunters.
-                    </p>
-                </div>
-            </li>            
-            <li class="channel">
-                <div class="triangle">
-                    <i class="fa-solid fa-code-fork center-triangle-item" style="font-size: xx-large; " ></i>
-                </div>
-                <div>
-                    <h3 style="text-align: center;"><strong>Channels</strong></h3>
-                    <p>
-                        The Channels section delineates the strategic methods by which the company establishes communication and engagement with its clients to effectively deliver its value propositions. <br><br>
-                    </p>
-                    </p>
-                    <p class="description">
-                        When addressing this segment, meticulously assess each <strong>Customer Segment</strong> and deliberate on the optimal means of product delivery tailored to the unique requirements of each demographic. Pose the question, <strong>"How can we efficiently disseminate our product to cater to the specific needs of this customer segment?"</strong>
-                    </p>
-                </div>
-            </li>
-            <li class="customer-relationship">
-                <div class="triangle">
-                    <i class="fa-solid fa-comments center-triangle-item" style="font-size: xx-large; " ></i>
-                </div>
-                <div>
-                    <h3 style="text-align: center;"><strong>Customer Relationships</strong></h3>
-                    <p>
-                        This section entails describing the types of connections the company cultivates and maintains with its customers to ensure their ongoing satisfaction and loyalty. 
-                    </p>
-                    <p class="description">
-                        Consider the nature of interactions you have with your customers: are they transactional, community-based, or personalized? Reflect on how these relationships contribute to your customer retention strategy and overall business objectives.
-                        To fill this section, you may ask:<strong>"What strategies can we implement to enhance our interactions with customers and foster long-term loyalty? How do these strategies align with our overall business objectives and contribute to our customer retention efforts?"</strong>
-                    </p>
-                </div>
-            </li>
-            <li class="revenue-stream">
-                <div class="triangle">
-                    <i class="fa-solid fa-sack-dollar center-triangle-item" style="font-size: xx-large; " ></i>
-                </div>
-                <div>
-                    <h3 style="text-align: center;"><strong>Revenue Streams</strong></h3>
-                    <p>
-                        Identify the diverse sources from which revenue is generated within your business model. Analyze each revenue stream to ascertain its significance and sustainability. 
-                    </p>
-                    <p class="description">
-                        Delve into pricing strategies, subscription models, one-time sales, or any other revenue-generating avenues pertinent to your business. The key question to ask here is: <strong>"what are the primary channels through which our company generates revenue, and how can we optimize them?"</strong>
-                    </p>
-                </div>
-            </li>
-            <li class="key-resources">
-                <div class="triangle">
-                    <i class="fa-solid fa-toolbox center-triangle-item" style="font-size: xx-large; " ></i>
-                </div>
-                <div>
-                    <h3 style="text-align: center;"><strong>Key Resources</strong></h3>
-                    <p>
-                        List the essential assets, resources, and capabilities required to deliver your value proposition effectively. Consider tangible assets such as equipment, technology, and facilities, as well as intangible resources like intellectual property, human capital, and strategic partnerships.
-                    </p>
-                    <p class="description">
-                        To complete this section, ask yourself: <strong> "what are the critical resources our company must possess or leverage to deliver our value proposition, and how can we ensure their optimal utilization?"</strong>
-                    </p>
-                </div>
-            </li>
-            <li class="key-activities">
-                <div class="triangle">
-                    <i class="fa-solid fa-pen-to-square center-triangle-item" style="font-size: xx-large; " ></i>
-                </div>
-                <div>
-                    <h3 style="text-align: center;">
-                        <strong>Key Activities</strong>
-                    </h3>
-                    <p>
-                        Identify the most crucial actions and processes that your company must undertake to deliver its value proposition successfully. These activities could encompass product development, marketing campaigns, distribution logistics, customer service, or any other operational tasks vital to your business model.
-                    </p>
-                    <p class="description">
-                        To fill this section effectively, ponder upon the question:<strong> "what are the core activities our company must perform to fulfill our value proposition and achieve our strategic goals?"</strong>
-                    </p>
-                </div>
-            </li>
-            <li class="key-partner">
-                <div class="triangle">
-                    <i class="fa-solid fa-handshake center-triangle-item" style="font-size: xx-large; " ></i>
-                </div>
-                <div>
-                    <h3 style="text-align: center;"><strong>Key Partnerships</strong></h3>
-                    <p>
-                        Describe the external entities and organizations that your company collaborates with to augment resources, mitigate risks, or access new markets. These partnerships could range from suppliers and distributors to strategic alliances and joint ventures. Consider the synergies and mutual benefits derived from these collaborations.
-                    </p>
-                    <p class="description">
-                        To complete this section, reflect on the question: <strong>"which external partnerships are essential for our business success, and how can we nurture and leverage them effectively?"</strong>
-                    </p>
-                </div>
-            </li>
-            <li class="cost-structure">
-                <div class="triangle">
-                    <i class="fa-solid fa-file-invoice-dollar center-triangle-item" style="font-size: xx-large; " ></i>
-                </div>
-                <div>
-                    <h3 style="text-align: center;"><strong>Cost Structure</strong></h3>
-                    <p>
-                        Outline the costs and expenses incurred by your business model to operate efficiently and generate revenue. This includes both fixed and variable costs such as production expenses, marketing expenditures, overhead costs, and any other financial outlays relevant to your operations.
-                    </p>
-                    <p class="description">
-                        To fill this section comprehensively, analyze your cost drivers and evaluate opportunities for cost optimization. Ask yourself: <strong>"what are the primary cost components of our business, and how can we manage them effectively to maximize profitability?"</strong>
-                    </p>
-                </div>
-            </li>
-        </ul>
+    <li class="value-proposition">
+        <div class="triangle">
+            <i class="fa-solid fa-gift center-triangle-item" style="font-size: xx-large;"></i>
+        </div>
+        <div>
+            <h3 style="text-align: center;"><strong>Value Propositions</strong></h3>
+            <p>Durable, eco-friendly reusable bags</p>
+            <p>Customizable designs for personal or corporate branding</p>
+            <p>Affordable pricing compared to competitors</p>
+            <p>Contribution to reducing plastic waste</p>
+        </div>
+    </li>
+    <li class="customer-segment">
+        <div class="triangle">
+            <i class="fa-solid fa-user-group center-triangle-item" style="font-size: xx-large;"></i>
+        </div>
+        <div>
+            <h3 style="text-align: center;"><strong>Customer Segments</strong></h3>
+            <p>Environmentally conscious consumers</p>
+            <p>Retail stores and supermarkets</p>
+            <p>Corporate clients for promotional items</p>
+            <p>Online shoppers</p>
+        </div>
+    </li>            
+    <li class="channel">
+        <div class="triangle">
+            <div class="content-modified">
+                <div class="network"></div>
+                <div class="main-line line1"></div>
+                <div class="main-line line2"></div>
+                <div class="main-line line3"></div>
+                <div class="main-line line4"></div>
+                <div class="main-line line5"></div>
+                <div class="main-line line6"></div>
+                <div class="network main-line-circle line-circle1"></div>
+                <div class="network main-line-circle line-circle2"></div>
+                <div class="network main-line-circle line-circle3"></div>
+                <div class="network main-line-circle line-circle4"></div>
+                <div class="network main-line-circle line-circle5"></div>
+                <div class="network main-line-circle line-circle6"></div>
+            </div>
+        </div>                
+        <div>
+            <h3 style="text-align: center;"><strong>Channels</strong></h3>
+            <p>Online store (company website)</p>
+            <p>E-commerce platforms (Amazon, Etsy)</p>
+            <p>Retail stores and supermarkets</p>
+            <p>Corporate sales team for B2B clients</p>
+        </div>
+    </li>
+    <li class="customer-relationship">
+        <div class="triangle">
+            <i class="fa-solid fa-comments center-triangle-item" style="font-size: xx-large;"></i>
+        </div>
+        <div>
+            <h3 style="text-align: center;"><strong>Customer Relationships</strong></h3>
+            <p>Social media engagement</p>
+            <p>Email newsletters with eco-friendly tips and product updates</p>
+            <p>Customer support via chat, email, and phone</p>
+            <p>Loyalty programs and discounts for repeat customers</p>
+        </div>
+    </li>
+    <li class="revenue-stream">
+        <div class="triangle">
+            <i class="fa-solid fa-sack-dollar center-triangle-item" style="font-size: xx-large;"></i>
+        </div>
+        <div>
+            <h3 style="text-align: center;"><strong>Revenue Streams</strong></h3>
+            <p>Direct sales through online store</p>
+            <p>Wholesale orders from retail stores and supermarkets</p>
+            <p>Customized orders for corporate clients</p>
+            <p>Subscription service for new designs and limited editions</p>
+        </div>
+    </li>
+    <li class="key-resources">
+        <div class="triangle">
+            <i class="fa-solid fa-toolbox center-triangle-item" style="font-size: xx-large;"></i>
+        </div>
+        <div>
+            <h3 style="text-align: center;"><strong>Key Resources</strong></h3>
+            <p>Manufacturing facility and equipment</p>
+            <p>Design team for product customization</p>
+            <p>Website and e-commerce infrastructure</p>
+            <p>Marketing and sales team</p>
+        </div>
+    </li>
+    <li class="key-activities">
+        <div class="triangle">
+            <i class="fa-solid fa-pen-to-square center-triangle-item" style="font-size: xx-large;"></i>
+        </div>
+        <div>
+            <h3 style="text-align: center;"><strong>Key Activities</strong></h3>
+            <p>Product design and manufacturing</p>
+            <p>Marketing and promotion</p>
+            <p>Order fulfillment and shipping</p>
+            <p>Customer service and support</p>
+        </div>
+    </li>
+    <li class="key-partner">
+        <div class="triangle">
+            <i class="fa-solid fa-handshake center-triangle-item" style="font-size: xx-large;"></i>
+        </div>
+        <div>
+            <h3 style="text-align: center;"><strong>Key Partnerships</strong></h3>
+            <p>Suppliers of eco-friendly materials</p>
+            <p>Retail partners for distribution</p>
+            <p>E-commerce platforms for online sales</p>
+            <p>Environmental organizations for joint campaigns</p>
+        </div>
+    </li>
+    <li class="cost-structure">
+        <div class="triangle">
+            <i class="fa-solid fa-file-invoice-dollar center-triangle-item" style="font-size: xx-large;"></i>
+        </div>
+        <div>
+            <h3 style="text-align: center;"><strong>Cost Structure</strong></h3>
+            <p>Manufacturing and material costs</p>
+            <p>Marketing and advertising expenses</p>
+            <p>Salaries for employees</p>
+            <p>Shipping and logistics costs</p>
+        </div>
+    </li>
+</ul>
+
     </div>  
 </div>
+<div class="chatgpt-div" id="chatgpt_logo">
+    <img src="{% static 'picture/chatgpt.jpg' %}" alt=" Logo" class="chatgpt">
+    <p style="color: black;" id="ask_ai">Ask AI</p>
+</div>
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span><br>
+        <h3 style="text-align: center;">How to use ChatGPT for your model</h3><br>
+        <p>
+            To use ChatGPT better, you have to define what do you need.it's crucial to provide specific details and context about your inquiry. For instance, instead of asking a broad question like "How do I improve my business canvas?" you could ask, "In the 'Customer Segments' section of my business canvas, how can I identify niche market segments for my online pet grooming service targeting urban millennials?" <br>
+            By being specific about the section of the canvas you're focusing on and the target market you're addressing, you help me understand the scope of your question and provide a more relevant response. Additionally, including examples or scenarios, such as mentioning specific challenges you're facing or goals you're trying to achieve, can further clarify your question and facilitate a more effective exchange of information.
+        </p>
+        <a href="https://chatgpt.com/" class="chatgpt-button">Go to ChatGPT</a>
+    </div>
+</div>
+
 <script>
     document.querySelectorAll("li").forEach(li => {
         li.addEventListener('click', () => {

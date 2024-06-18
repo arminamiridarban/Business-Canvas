@@ -1,4 +1,5 @@
 {% extends 'layout.html' %}
+{% load static %}
 {%block title%} Compare canvas {%endblock%}
 
 {%block body%}
@@ -88,6 +89,21 @@
                 <h3 style="padding-bottom: 20px;">Cost Structure</h3>
             </div>  
         </div>
+    </div>
+</div>
+<div class="chatgpt-div" id="chatgpt_logo">
+    <img src="{% static 'picture/chatgpt.jpg' %}" alt=" Logo" class="chatgpt">
+    <p style="color: black;" id="ask_ai">Ask AI</p>
+</div>
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span><br>
+        <h3 style="text-align: center;">How to use ChatGPT for your model</h3><br>
+        <p>
+            To use ChatGPT better, you have to define what do you need.it's crucial to provide specific details and context about your inquiry. For instance, instead of asking a broad question like "How do I improve my business canvas?" you could ask, "In the 'Customer Segments' section of my business canvas, how can I identify niche market segments for my online pet grooming service targeting urban millennials?" <br>
+            By being specific about the section of the canvas you're focusing on and the target market you're addressing, you help me understand the scope of your question and provide a more relevant response. Additionally, including examples or scenarios, such as mentioning specific challenges you're facing or goals you're trying to achieve, can further clarify your question and facilitate a more effective exchange of information.
+        </p>
+        <a href="https://chatgpt.com/" class="chatgpt-button">Go to ChatGPT</a>
     </div>
 </div>
 {%csrf_token%}
